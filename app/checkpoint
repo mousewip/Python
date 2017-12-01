@@ -1,0 +1,6 @@
+model_checkpoint_path: "D:\\workspace\\Python\\app\\my-model-120000"
+all_model_checkpoint_paths: "D:\\workspace\\Python\\app\\my-model-80000"
+all_model_checkpoint_paths: "D:\\workspace\\Python\\app\\my-model-90000"
+all_model_checkpoint_paths: "D:\\workspace\\Python\\app\\my-model-100000"
+all_model_checkpoint_paths: "D:\\workspace\\Python\\app\\my-model-110000"
+all_model_checkpoint_paths: "D:\\workspace\\Python\\app\\my-model-120000"

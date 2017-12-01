@@ -25,11 +25,11 @@ def run():
         while True:
             print("Your answer (yes/no): ")
             ans = input()
-            if(ans.lower() == "yes"):
+            if(ans[0].lower() == "y"):
                 #make answer random from dictionaries ingredients
                 print(random.choice(ingredients[key]))
                 break
-            elif ans.lower() == "no":
+            elif ans[0].lower() == "n":
                 break
             else: print("Wrong answer format, please answer again.")
 run()

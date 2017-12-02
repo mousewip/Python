@@ -1,3 +1,4 @@
+# Ho Thanh Phong
 import random
 
 #init dictionaries question

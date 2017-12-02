@@ -30,7 +30,7 @@ class BikeShop:
             print("\t" + bicycle.name + " : %d" % self.inventory[bicycle])
 
     def sellingBikes(self, bicycle, quantity):
-        if(self.inventory[bicycle] > 0):
+        if(self.inventory[bicycle] >= quantity):
             self.profit += (self.price[bicycle] - bicycle.produceCost) * quantity
             self.inventory[bicycle] -= quantity
         else: print("Not enought quantity")

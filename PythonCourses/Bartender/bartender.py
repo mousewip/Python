@@ -16,7 +16,7 @@ ingredients = {
     "salty": ["olive on a stick", "salt-dusted rim", "rasher of bacon"],
     "bitter": ["shake of bitters", "splash of tonic", "twist of lemon peel"],
     "sweet": ["sugar cube", "spoonful of honey", "spash of cola"],
-    "fruity": ["slice of orange", "dash of cassis", "cherry on top"],
+    "fruity": ["slice of orange", "dash of cassis", "cherry on top"]
 }
 
 def run():
@@ -24,7 +24,7 @@ def run():
     for key in questions:
         print(questions[key])
         while True:
-            print("Your answer (yes/no): ")
+            print("Your answer (yes/no): ", end='')
             ans = input()
             if(ans[0].lower() == "y"):
                 #make answer random from dictionaries ingredients

@@ -20,17 +20,24 @@ class Bicycle:
 
 class BikeShop:
     price = {}
+    inventory = {}
     profit = 0
-    def __init__(self, name, inventory):
+    def __init__(self, name, listBicycle):
         self.name = name
-        self.inventory = inventory
-        for bicycle in inventory:
+        self.goodsReceipt(listBicycle)
+        for bicycle in self.inventory:
             # price = cost to produce of bicycle + percentage over the cost from Bicycle Manufacturer
             self.price[bicycle] = bicycle.produceCost + (bicycle.produceCost * bicycle.manufacturer.percentageOverTheCost / 100)
 
     def printInventory(self):
         for bicycle in self.inventory:
             print("\t %s : %d" % (bicycle.name, self.inventory[bicycle]))
+
+    def goodsReceipt(self, listBicycle):
+        for bicycle in listBicycle:
+            # quantity of different bicycles is random, can replace by user input
+            self.inventory[bicycle] = random.randrange(1, 10)
+
 
     def sellingBikes(self, bicycle, quantity):
         if(self.inventory[bicycle] >= quantity):
@@ -159,14 +166,8 @@ def run():
     listBicycle = initListBicycle()
     listCustomer = initListCustomer()
 
-    # init inventory of different bicycles of Bike Shop
-    inventory = {}
-    for bicycle in listBicycle:
-        #quantity of different bicycles is random, can replace by user input
-        inventory[bicycle] = random.randrange(1, 5)
-
     #init bike shop
-    bikeShop = BikeShop("TPT Bike Shop", inventory)
+    bikeShop = BikeShop("TPT Bike Shop", listBicycle)
 
     print ("The name of each customer:")
     canBuy = printListBicycleCanBuy(listCustomer, bikeShop)
@@ -184,7 +185,6 @@ def run():
             for val in canBuy[customer]:
                 if(bikeShop.inventory[val] > 0):
                     print("%d : %s : $%.2f" %(i, val.name,bikeShop.price[val]))
-                    print(val.frame.material.name)
                     i += 1
         # loop when user input option is invalid
         while True:

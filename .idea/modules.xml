@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Auction/.idea/Auction.iml" filepath="$PROJECT_DIR$/../Auction/.idea/Auction.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../FirstFlask/.idea/FirstFlask.iml" filepath="$PROJECT_DIR$/../FirstFlask/.idea/FirstFlask.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Flask/.idea/Flask.iml" filepath="$PROJECT_DIR$/../Flask/.idea/Flask.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Python.iml" filepath="$PROJECT_DIR$/.idea/Python.iml" />
     </modules>
   </component>

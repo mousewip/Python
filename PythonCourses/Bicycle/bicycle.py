@@ -16,8 +16,6 @@ class Bicycle:
         print("Wheel: " + self.wheel.printInfo())
         print("Frame: " +self.frame.printInfo())
 
-
-
 class BikeShop:
     price = {}
     inventory = {}
@@ -25,9 +23,6 @@ class BikeShop:
     def __init__(self, name, listBicycle):
         self.name = name
         self.goodsReceipt(listBicycle)
-        for bicycle in self.inventory:
-            # price = cost to produce of bicycle + percentage over the cost from Bicycle Manufacturer
-            self.price[bicycle] = bicycle.produceCost + (bicycle.produceCost * bicycle.manufacturer.percentageOverTheCost / 100)
 
     def printInventory(self):
         for bicycle in self.inventory:
@@ -37,6 +32,8 @@ class BikeShop:
         for bicycle in listBicycle:
             # quantity of different bicycles is random, can replace by user input
             self.inventory[bicycle] = random.randrange(1, 10)
+            # price = cost to produce of bicycle + percentage over the cost from Bicycle Manufacturer
+            self.price[bicycle] = bicycle.produceCost + (bicycle.produceCost * bicycle.manufacturer.percentageOverTheCost / 100)
 
 
     def sellingBikes(self, bicycle, quantity):
@@ -47,7 +44,6 @@ class BikeShop:
         else:
             print("Not enought quantity")
             return False
-
 
 class Customer:
     #customer have list bike, can add a new car when they buy
@@ -101,7 +97,6 @@ class BicycleManufacturer:
             print(model + " ", end='')
 
 
-
 def initListManufacturer():
     man1 = BicycleManufacturer("A-Bike", ["Model A-Bike 1", "Model A-Bike 2", "Model A-Bike 3"], random.randrange(20, 30))
     man2 = BicycleManufacturer("Atala", ["Model Atala 1", "Model Atala 2", "Model Atala 3"], random.randrange(20, 30))
@@ -117,15 +112,15 @@ def initListWheel():
 def initListFrame():
     frame1 = Frame(Material.ALUMINUM, 42.4, 47)
     frame2 = Frame(Material.CARBON, 27, 105)
-    frame3 = Frame(Material.CARBON, 37, 87.6)
+    frame3 = Frame(Material.STEEL, 37, 87.6)
     return [frame1, frame2, frame3]
 
 
 #init list customer (3 customer)
 def initListCustomer():
     customer1 = Customer("Mr. Phong", 200)
-    customer2 = Customer("Mr. Viet", 500)
-    customer3 = Customer("Mr. Dan", 1000)
+    customer2 = Customer("Mr. Tan", 500)
+    customer3 = Customer("Mr. Tuyen", 1000)
     return [customer1, customer2, customer3]
 
 #init list bicycle (6 bicycle)

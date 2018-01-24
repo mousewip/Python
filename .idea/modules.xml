@@ -3,9 +3,15 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../Auction/.idea/Auction.iml" filepath="$PROJECT_DIR$/../Auction/.idea/Auction.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Blog/.idea/Blog.iml" filepath="$PROJECT_DIR$/Blog/.idea/Blog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../EXCEL/.idea/EXCEL.iml" filepath="$PROJECT_DIR$/../EXCEL/.idea/EXCEL.iml" />
       <module fileurl="file://$PROJECT_DIR$/../FirstFlask/.idea/FirstFlask.iml" filepath="$PROJECT_DIR$/../FirstFlask/.idea/FirstFlask.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Flask/.idea/Flask.iml" filepath="$PROJECT_DIR$/../Flask/.idea/Flask.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Layout/.idea/Layout.iml" filepath="$PROJECT_DIR$/../Layout/.idea/Layout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Login/.idea/Login.iml" filepath="$PROJECT_DIR$/Login/.idea/Login.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ML/.idea/ML.iml" filepath="$PROJECT_DIR$/ML/.idea/ML.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Python.iml" filepath="$PROJECT_DIR$/.idea/Python.iml" />
+      <module fileurl="file://$USER_HOME$/Documents/erp_fruitsandgreens/.idea/erp_fruitsandgreens.iml" filepath="$USER_HOME$/Documents/erp_fruitsandgreens/.idea/erp_fruitsandgreens.iml" />
     </modules>
   </component>
 </project>

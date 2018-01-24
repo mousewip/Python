@@ -1,0 +1,113 @@
+{% extends 'admin/main/index.html' %}
+{% block js_header %}
+    <script src="../../../static/admin/vendors/moment/min/moment.min.js"></script>
+{% endblock %}
+
+{% block page_content %}
+    <div class="col-md-12">
+{#        <button class="btn btn-success" onclick="location.href='/admin/entry/add'">Add new Entry</button>#}
+        <a href="/admin/entry/add" class="btn btn-success">Add new Entry</a>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <div class="form-group">
+                        <label class="control-label col-md-1 col-sm-1 col-xs-1">Show</label>
+                        <div class="col-md-1 col-sm-1 col-xs-1">
+                          <select class="form-control">
+                            <option>5</option>
+                            <option>10</option>
+                            <option>20</option>
+                            <option>50</option>
+                            <option>100</option>
+                          </select>
+                        </div>
+                      </div>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Settings 1</a>
+                            </li>
+                            <li><a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Create date</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if lstentry != None %}
+                        {% for entry in lstentry %}
+                            <tr>
+                                <th scope="row">{{ entry.id }}</th>
+                                <td>{{ entry.title }}</td>
+                                <td>
+                                    {{ entry.createdate }}</td>
+                                <td style="text-align: center">
+                                    <a href="/admin/entry/{{ entry.id }}/edit">
+                                        <span class="glyphicon glyphicon-edit"
+                                              style="font-size: 15px;color: #337AB7; "></span>
+                                    </a>
+                                </td>
+                                <td style="text-align: center" href="/admin/entry/{{ entry.id }}/edit">
+                                    <span class="glyphicon glyphicon-trash" style="font-size: 15px;color: #DE1D25;"
+                                          id="{{ entry.id }}"></span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+
+
+            </div>
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="dataTables_info" id="datatable-responsive_info" role="status" aria-live="polite">Showing
+                        1 to 10 of 57 entries
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="dataTables_paginate paging_simple_numbers" id="datatable-responsive_paginate">
+                        <ul class="pagination">
+                            <li class="paginate_button previous disabled" id="datatable-responsive_previous"><a href="#"
+                                                                                                                aria-controls="datatable-responsive"
+                                                                                                                data-dt-idx="0"
+                                                                                                                tabindex="0">Previous</a>
+                            </li>
+                            {% for i in range(total_page) %}
+                            <li class="paginate_button {% if((i + 1) == page) %} active {% endif %}"><a href="?page={{ i + 1 }}" aria-controls="datatable-responsive"
+                                                                  data-dt-idx="1" tabindex="0">{{ i + 1 }}</a></li>
+                            {% endfor %}
+                            <li class="paginate_button next" id="datatable-responsive_next"><a href="?page={{ page + 1 }}"
+                                                                                               aria-controls="datatable-responsive"
+                                                                                               data-dt-idx="7"
+                                                                                               tabindex="0">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

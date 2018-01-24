@@ -1,0 +1,60 @@
+{% extends 'user/mainpage/mainpage.html' %}
+
+{% block content %}
+    {% if lstentry != None %}
+        {% for entry in lstentry %}
+            <article class="blog-item">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="/entry/{{ entry.id }}">
+                            <img src="../../../static/user/img/corporate.jpg" class="img-thumbnail center-block"
+                                 alt="Blog Post Thumbnail">
+                        </a>
+                    </div>
+                    <div class="col-md-9">
+                        <p>
+                            in
+                            <a href="html5-templates.html">html5</a>
+                            ,
+                            <a href="#">templates</a>
+                            <time>23-july-2015</time>
+                        </p>
+                        <h1>
+                            <a href="/entry/{{ entry.id }}">{{ entry.title }}</a>
+                        </h1>
+                    </div>
+                </div>
+            </article> <!-- /.blog-item -->
+        {% endfor %}
+    {% endif %}
+
+
+
+    <div class="page-turn">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <nav>
+                    <ul class="pagination pagination-sm">
+                        <li class="disabled">
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">Prev</span>
+                            </a>
+                        </li>
+
+                        {% for item in range(total_page) %}
+                            <li  {% if( (item + 1) == page) %} class="active" {% endif %}>
+                                <a href="?page={{ item + 1}}">{{ item + 1 }}</a>
+                            </li>
+                        {% endfor %}
+
+                        <li>
+                            <a href="page6.html" aria-label="Next">
+                                <span aria-hidden="true">Next</span>
+                            </a>
+                        </li>
+                    </ul> <!-- /.pagination -->
+                </nav>
+            </div>
+        </div>
+    </div>
+{% endblock %}

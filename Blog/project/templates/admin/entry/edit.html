@@ -1,0 +1,142 @@
+{% extends 'admin/main/index.html' %}
+
+
+{% block css_header %}
+        <!-- iCheck -->
+    <link href="../../../static/admin/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-wysiwyg -->
+{#    <link href="../../../static/admin/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">#}
+{#    <!-- Select2 -->#}
+{#    <link href="../../../static/admin/vendors/select2/dist/css/select2.min.css" rel="stylesheet">#}
+{#    <!-- Switchery -->#}
+{#    <link href="../../../static/admin/vendors/switchery/dist/switchery.min.css" rel="stylesheet">#}
+{#    <!-- starrr -->#}
+{#    <link href="../../../static/admin/vendors/starrr/dist/starrr.css" rel="stylesheet">#}
+{#    <!-- bootstrap-daterangepicker -->#}
+{#    <link href="../../../static/admin/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">#}
+
+{% endblock %}
+
+
+{% block page_content %}
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Form Design
+                    <small>different form elements</small>
+                </h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Settings 1</a>
+                            </li>
+                            <li><a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <br>
+                <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+
+                    <div class="form-group">
+                        <label for="middle-name" class="control-label col-md-1 col-sm-1">ID </label>
+                        <div class="col-md-11 col-sm-11 col-xs-12">
+                            <input id="middle-name" class="form-control col-md-11 col-xs-11" type="text"
+                                   disabled="disabled" name="id" value="{{ entry.id }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Title <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-11 col-sm-11 col-xs-12">
+                            <input type="text" id="first-name" required="required" name="title"
+                                   class="form-control col-md-7 col-xs-12" value="{{ entry.title }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12" for="last-name">Content <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-11 col-sm-11 col-xs-12">
+                            <textarea id="content" name="txtContent" required="required"
+                                   class="form-control col-md-7 col-xs-12" >{{ entry.content }}
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12">Publish</label>
+                        <div class="checkbox">
+                            <label class="">
+                              <div class="icheckbox_flat-green checked" style="position: relative;"><input type="checkbox" class="flat" value="1" name="publish" checked="checked" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div> Publish
+                            </label>
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-sm-2 col-xs-12">Create date <span
+                                class="required">*</span>
+                        </label>
+                        <div class="col-md-10 col-sm-10 col-xs-12">
+                            <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" name="createdate"
+                                   type="text" value="{{ entry.createdate }}">
+                        </div>
+                    </div>
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                            <a class="btn btn-primary" type="button" href="/admin/entry">Cancel</a>
+                            <button class="btn btn-primary" type="reset">Reset</button>
+                            <button type="submit" class="btn btn-success" formaction="/admin/entry/{{ entry.id  }}/edit" formmethod="post">Submit</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js_footer %}
+        <!-- iCheck -->
+    <script src="../../../static/admin/vendors/iCheck/icheck.min.js"></script>
+{#    <!-- bootstrap-daterangepicker -->#}
+    <script src="../../../static/admin/vendors/moment/min/moment.min.js"></script>
+{#    <script src="../../../static/admin/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>#}
+{#    <!-- bootstrap-wysiwyg -->#}
+{#    <script src="../../../static/admin/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>#}
+{#    <script src="../../../static/admin/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>#}
+{#    <script src="../../../static/admin/vendors/google-code-prettify/src/prettify.js"></script>#}
+{#    <!-- jQuery Tags Input -->#}
+{#    <script src="../../../static/admin/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>#}
+{#    <!-- Switchery -->#}
+{#    <script src="../../../static/admin/vendors/switchery/dist/switchery.min.js"></script>#}
+{#    <!-- Select2 -->#}
+{#    <script src="../../../static/admin/vendors/select2/dist/js/select2.full.min.js"></script>#}
+{#    <!-- Parsley -->#}
+{#    <script src="../../../static/admin/vendors/parsleyjs/dist/parsley.min.js"></script>#}
+{#    <!-- Autosize -->#}
+{#    <script src="../../../static/admin/vendors/autosize/dist/autosize.min.js"></script>#}
+{#    <!-- jQuery autocomplete -->#}
+{#    <script src="../../../static/admin/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>#}
+{#    <!-- starrr -->#}
+{#    <script src="../../../static/admin/vendors/starrr/dist/starrr.js"></script>#}
+
+    <script src="../../../static/common/js/ckeditor/ckeditor.js"></script>
+
+    <script>
+        var ckeditor = CKEDITOR.replace('txtContent', {
+            customConfig: 'config.js'
+        });
+
+    </script>
+{% endblock %}

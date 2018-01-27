@@ -5,24 +5,24 @@
 
 {% block page_content %}
     <div class="col-md-12">
-{#        <button class="btn btn-success" onclick="location.href='/admin/entry/add'">Add new Entry</button>#}
-        <a href="/admin/entry/add" class="btn btn-success">Add new Entry</a>
+        {#        <button class="btn btn-success" onclick="location.href='/admin/entry/add'">Add new Entry</button>#}
+        <a href="/panel/entry/add" class="btn btn-success">Add new Entry</a>
     </div>
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
                 <div class="form-group">
-                        <label class="control-label col-md-1 col-sm-1 col-xs-1">Show</label>
-                        <div class="col-md-1 col-sm-1 col-xs-1">
-                          <select class="form-control">
-                            <option>5</option>
-                            <option>10</option>
-                            <option>20</option>
-                            <option>50</option>
-                            <option>100</option>
-                          </select>
-                        </div>
-                      </div>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-1">Show</label>
+                    <div class="col-md-2 col-sm-2 col-xs-2">
+                        <select class="form-control" id="select-limit">
+                            <option {% if limit == 5 %} selected {% endif %}>5</option>
+                            <option{% if limit == 10 %} selected {% endif %}>10</option>
+                            <option{% if limit == 20 %} selected {% endif %}>20</option>
+                            <option{% if limit == 50 %} selected {% endif %}>50</option>
+                            <option{% if limit == 100 %} selected {% endif %}>100</option>
+                        </select>
+                    </div>
+                </div>
                 <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -56,20 +56,22 @@
                     <tbody>
                     {% if lstentry != None %}
                         {% for entry in lstentry %}
-                            <tr>
+                            <tr id="row_{{ entry.id }}">
                                 <th scope="row">{{ entry.id }}</th>
                                 <td>{{ entry.title }}</td>
                                 <td>
                                     {{ entry.createdate }}</td>
                                 <td style="text-align: center">
-                                    <a href="/admin/entry/{{ entry.id }}/edit">
+                                    <a href="/panel/entry/{{ entry.id }}/edit">
                                         <span class="glyphicon glyphicon-edit"
                                               style="font-size: 15px;color: #337AB7; "></span>
                                     </a>
                                 </td>
-                                <td style="text-align: center" href="/admin/entry/{{ entry.id }}/edit">
-                                    <span class="glyphicon glyphicon-trash" style="font-size: 15px;color: #DE1D25;"
-                                          id="{{ entry.id }}"></span>
+                                <td style="text-align: center">
+                                    <a href="#" class="delete-row" data-id="{{ entry.id }}">
+                                        <span class="glyphicon glyphicon-trash"
+                                              style="font-size: 15px;color: #DE1D25;"></span>
+                                    </a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -80,27 +82,32 @@
 
             </div>
             <div class="row">
-                <div class="col-sm-5">
-                    <div class="dataTables_info" id="datatable-responsive_info" role="status" aria-live="polite">Showing
-                        1 to 10 of 57 entries
-                    </div>
-                </div>
+                {#                <div class="col-sm-5">#}
+                {#                    <div class="dataTables_info" id="datatable-responsive_info" role="status" aria-live="polite">Showing#}
+                {#                        1 to 10 of 57 entries#}
+                {#                    </div>#}
+                {#                </div>#}
                 <div class="col-sm-7">
                     <div class="dataTables_paginate paging_simple_numbers" id="datatable-responsive_paginate">
                         <ul class="pagination">
-                            <li class="paginate_button previous disabled" id="datatable-responsive_previous"><a href="#"
-                                                                                                                aria-controls="datatable-responsive"
-                                                                                                                data-dt-idx="0"
-                                                                                                                tabindex="0">Previous</a>
+                            <li class="paginate_button previous  {% if(page == 1) %}  disabled {% endif %}"
+                                id="datatable-responsive_previous"><a
+                                    href="/panel/page/{{ page - 1 }}?limit={{ limit }}"
+                                    aria-controls="datatable-responsive"
+                                    data-dt-idx="0"
+                                    tabindex="0">Previous</a>
                             </li>
                             {% for i in range(total_page) %}
-                            <li class="paginate_button {% if((i + 1) == page) %} active {% endif %}"><a href="?page={{ i + 1 }}" aria-controls="datatable-responsive"
-                                                                  data-dt-idx="1" tabindex="0">{{ i + 1 }}</a></li>
+                                <li class="paginate_button {% if((i + 1) == page) %} active {% endif %}"><a
+                                        href="/panel/page/{{ i + 1 }}?limit={{ limit }}"
+                                        aria-controls="datatable-responsive"
+                                        data-dt-idx="1" tabindex="0">{{ i + 1 }}</a></li>
                             {% endfor %}
-                            <li class="paginate_button next" id="datatable-responsive_next"><a href="?page={{ page + 1 }}"
-                                                                                               aria-controls="datatable-responsive"
-                                                                                               data-dt-idx="7"
-                                                                                               tabindex="0">Next</a>
+                            <li class="paginate_button next {% if(page == total_page) %}  disabled {% endif %}"
+                                id="datatable-responsive_next"><a href="/panel/page/{{ page + 1 }}?limit={{ limit }}"
+                                                                  aria-controls="datatable-responsive"
+                                                                  data-dt-idx="7"
+                                                                  tabindex="0">Next</a>
                             </li>
                         </ul>
                     </div>
@@ -109,5 +116,66 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block js_footer %}
+    <script>
+        $(document).ready(function () {
+            $('#select-limit').change(function () {
+                    var str = window.location.href;
+                    var index = str.indexOf("?");
+                    if (index == -1)
+                        $(location).attr("href", window.location.href + "?limit=" + $(this).val());
+                    else {
+                        {#                        alert(str.substr(0, index))#}
+                        $(location).attr("href", str.substr(0, index) + "?limit=" + $(this).val());
+                    }
+                }
+            );
+
+
+            $('.delete-row').off('click').on('click', function (e) {
+                e.preventDefault();
+
+                var a = $(this);
+                console.log(a);
+                var id = a.data("id");
+                var row = $('#row_' + id);
+
+                console.log(id);
+
+                var rs = confirm("Do you want delete this entry?");
+                if (rs) {
+                    $.ajax({
+                        url: '/panel/entry/delete',
+                        type: 'POST',
+                        data: {'id': id},
+                        success: function (respond_data) {
+                            console.log(respond_data);
+                            if (respond_data == 'OK') {
+                                row.remove();
+                                new PNotify({
+                                    title: 'Delete Success',
+                                    text: 'Entry ' + id + ' is deleted!',
+                                    type: 'success',
+                                    styling: 'bootstrap3',
+                                    delay: 3000
+                                });
+                            }
+                        }
+                    });
+                }
+                else {
+{#                    new PNotify({#}
+{#                        title: 'Delete Success',#}
+{#                        text: 'Cancel delete',#}
+{#                        type: 'success',#}
+{#                        styling: 'bootstrap3',#}
+{#                        delay: 3000#}
+{#                    });#}
+                }
+            })
+        });
+    </script>
+
 {% endblock %}
 

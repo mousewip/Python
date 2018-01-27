@@ -12,6 +12,7 @@
     <orderEntry type="module" module-name="ML" />
     <orderEntry type="module" module-name="Blog" />
     <orderEntry type="module" module-name="EXCEL" />
+    <orderEntry type="module" module-name="Crawl" />
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../Auction/.idea/Auction.iml" filepath="$PROJECT_DIR$/../Auction/.idea/Auction.iml" />
       <module fileurl="file://$PROJECT_DIR$/Blog/.idea/Blog.iml" filepath="$PROJECT_DIR$/Blog/.idea/Blog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Crawl/.idea/Crawl.iml" filepath="$PROJECT_DIR$/../Crawl/.idea/Crawl.iml" />
       <module fileurl="file://$PROJECT_DIR$/../EXCEL/.idea/EXCEL.iml" filepath="$PROJECT_DIR$/../EXCEL/.idea/EXCEL.iml" />
       <module fileurl="file://$PROJECT_DIR$/../FirstFlask/.idea/FirstFlask.iml" filepath="$PROJECT_DIR$/../FirstFlask/.idea/FirstFlask.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Flask/.idea/Flask.iml" filepath="$PROJECT_DIR$/../Flask/.idea/Flask.iml" />

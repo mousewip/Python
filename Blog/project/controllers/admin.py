@@ -22,23 +22,24 @@ def load_user(user_name):
 # redirect to login view - login_required
 @login_manager.unauthorized_handler
 def unauthorized():
-    return redirect('/admin/login')
+    return redirect('/panel/login')
 
-@app.route('/admin')
-@login_required
-def home():
-    db.create_all()
-    return render_template('admin/home/index.html')
+# @app.route('/panel')
+# @login_required
+# def home():
+#     # db.create_all()
+#     print(current_user.username)
+#     return redirect('/panel/' + current_user.username)
 
-@app.route('/admin/user')
+@app.route('/panel/user')
 @login_required
 def user():
     lstuser = User.query.all()
-    return render_template('admin/user/index.html', lstuser = lstuser)
+    return render_template('panel/user/index.html', lstuser = lstuser)
 
 
 
-@app.route('/admin/login', methods=['GET', 'POST'])
+@app.route('/panel/login', methods=['GET', 'POST'])
 def login():
     error_message = ''
     if(request.method == 'POST'):
@@ -53,19 +54,36 @@ def login():
     if (current_user.is_authenticated):
         print(current_user.id)
 
-        return redirect('/admin')
+        return redirect('/panel/')
     return render_template('admin/login/index.html', error_message = error_message)
 
-@app.route('/admin/logout')
+@app.route('/panel/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect('/admin/login')
+    return redirect('/panel/login')
 
 
-@app.route('/admin/register', methods=['POST'])
+@app.route('/panel/user/check', methods=['POST'])
+def check_username():
+    uname = request.form['username'].lower()
+    if(uname == "panel"):
+        return "NOTOK"
+    else:
+        lstuser = User.query.filter_by(username = uname).all()
+        print(len(lstuser))
+        return "OK" if len(lstuser) == 0 else "NOTOK"
+
+@app.route('/panel/user/checkemail', methods=['POST'])
+def check_email():
+    email = request.form['email'].lower()
+    lstuser = User.query.filter_by(email = email).all()
+    return "OK" if len(lstuser) == 0 else "NOTOK"
+
+
+@app.route('/panel/register', methods=['POST'])
 def register():
-    uname = request.form['username']
+    uname = request.form['username'].lower()
     email = request.form['email']
     password = request.form['password']
 
@@ -73,24 +91,27 @@ def register():
     db.session.add(user)
     db.session.commit()
 
-    return redirect('/admin/login')
+    return redirect('/panel/login')
 
-@app.route('/admin/entry')
+@app.route('/panel/')
+@app.route('/panel/page/<page>')
 @login_required
-def get_entries():
-    per_page = 10
-    page = 1
-    lst_entry = Entry.query.order_by(Entry.id).limit(per_page).offset((page - 1) * per_page).all()
+def get_entries(page = 1):
+    per_page = request.args.get('limit', 10, type=int)
+    lst_entry = Entry.query.filter(Entry.user_id == current_user.id).order_by(Entry.id).limit(per_page).offset(
+        (int(page) - 1) * per_page).all()
+
+    # lst_entry = Entry.query.order_by(Entry.id).limit(per_page).offset((page - 1) * per_page).all()
 
     if page == 1 and len(lst_entry) < per_page:
         total = len(lst_entry)
     else:
-        total = Entry.query.count()
+        total = Entry.query.filter(Entry.user_id == current_user.id).count()
 
     total_page = math.ceil(total / per_page)
-    return render_template('admin/entry/index.html', lstentry = lst_entry, total_page = total_page, page = page)
+    return render_template('admin/entry/index.html', lstentry = lst_entry, total_page = total_page, page = int(page), limit = per_page)
 
-@app.route('/admin/entry/add', methods=['GET', 'POST'])
+@app.route('/panel/entry/add', methods=['GET', 'POST'])
 @login_required
 def add_entries():
     if(request.method == 'GET'):
@@ -98,30 +119,48 @@ def add_entries():
     else:
         title = request.form['title']
         content = request.form['txtContent']
+        description = request.form['description']
 
-        entry = Entry(title, content)
+        entry = Entry(title, description, content, current_user.id)
         db.session.add(entry)
         db.session.commit()
-        return redirect('/admin/entry')
+        return redirect('/panel')
 
 
-@app.route('/admin/entry/<id>/edit', methods=['GET', 'POST'])
+@app.route('/panel/entry/<id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_entries(id=None):
     entry = Entry.query.filter(Entry.id == id).first()
     if(request.method == 'GET'):
-        return render_template('admin/entry/edit.html', entry=entry)
+        if(entry.user_id == current_user.id):
+            return render_template('admin/entry/edit.html', entry=entry)
+        else:
+            return redirect('/panel/')
     else:
         # eid = request.form['id']
         title = request.form['title']
         content = request.form['txtContent']
+        description = request.form['description']
         # createdate = request.form['createdate']
 
         # entry = Entry.query.filter(Entry.id == eid).first()
         entry.title = title
         entry.content = content
+        entry.teaser = description
         # entry.createdate = createdate
 
         db.session.commit()
-        return redirect('/admin/entry')
+        return redirect('/panel')
 
+@app.route('/panel/entry/delete', methods=['POST'])
+@login_required
+def delete_entry():
+    id = request.form['id']
+    entry = Entry.query.filter(Entry.id == id, Entry.user_id == current_user.id).first()
+
+    if(entry is None):
+        return "NOTOK"
+    else:
+        db.session.delete(entry)
+        db.session.commit()
+        return "OK"

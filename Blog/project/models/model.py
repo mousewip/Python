@@ -1,22 +1,11 @@
 from project import app
 import datetime
-from flask_migrate import Migrate, MigrateCommand, Manager
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String, DateTime, Text
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey
 from hashlib import md5
 from flask.ext.login import UserMixin, LoginManager,  login_user, current_user, login_required, logout_user
-from flask import Flask
-
-# app = Flask('project')
-# app.config['SECRET_KEY'] = 'blogfull'
-# app.config.from_pyfile('config.cfg')
-# app.debug = True
-
-# app.secret_key = 'c6c482b268b0a985f9b19c03419e246a'
 
 db = SQLAlchemy(app)
-
-# migrate = Migrate(app=app,db=db)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -31,6 +20,8 @@ class User(db.Model, UserMixin):
     email = Column(String, nullable=False)
     password = Column(String, nullable=False)
 
+    entries = db.relationship('Entry', backref='user', lazy=True)
+
     def __init__(self, uname, email ,password):
         self.username = uname
         self.email = email
@@ -43,12 +34,13 @@ class Entry(db.Model):
     __tablename__ = 'entries'
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(1024))
+    teaser = Column(String(1024))
     content = Column(Text)
-    createdate = Column(DateTime, default = datetime.datetime.now)
+    createdate = Column(DateTime, default=datetime.datetime.now)
+    user_id = Column(Integer, ForeignKey('user.id'), default=None, nullable=False)
 
-    def __init__(self, title, content):
+    def __init__(self, title, description, content, user_id=1):
         self.title = title
+        self.teaser = description
         self.content = content
-
-# if __name__ == '__main__':
-#     manager.run()
+        self.user_id = user_id

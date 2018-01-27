@@ -43,10 +43,8 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active"><a href="/">Home</a></li>
-                        <li><a href="html5-templates.html">HTML5 Templates</a></li>
-                        <li><a href="wordpress-themes.html">Wordpress Themes</a></li>
-                        <li><a href="design-inspiration.html">Design Inspiration</a></li>
-                        <li><a href="resources.html">Resource</a></li>
+                        <li><a href="/bloger">Bloger</a></li>
+                        <li><a href="/panel">{% if current_user.is_authenticated %} {{ current_user.username }} {% else %} Login {% endif %}</a></li>
                     </ul>
                 </div><!-- end of /.navbar-collapse -->
             </div><!-- end of /.container -->
@@ -56,18 +54,10 @@
             <div class="container">
                 <div class="row">
 
-                    <!-- blog-contents -->
-                    <section class="col-md-8">
-
-                        {% block content %} {% endblock %}
-
-                        <!-- /.page-turn -->
-
-                    </section>
-                    <!-- end of blog-contents -->
+                    {% block content %} {% endblock %}
 
                     <!-- sidebar -->
-                    <aside class="col-md-4 col-sm-8 col-xs-8">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
                         <div class="sidebar">
 
                             <!-- search option -->
@@ -110,7 +100,7 @@
                             </div> <!-- /.share-widget -->
 
                         </div>
-                    </aside> 
+                    </div>
                     <!-- end of sidebar -->
 
                 </div>
@@ -157,7 +147,7 @@
         <script type="text/javascript" src="../../../static/user/js/jQuery.scrollSpeed.js"></script>
 
         <!-- smooth-scroll -->
-        {% block jsFooter %} {% endblock %}
+        {% block js_footer %} {% endblock %}
 
         <script>
         $(function() {  

@@ -1,1 +1,1 @@
-from project.controllers import user, admin
+from project.controllers import home, account

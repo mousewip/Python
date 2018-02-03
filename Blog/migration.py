@@ -5,6 +5,8 @@ from flask_script import Manager
 from sqlalchemy import Column,Integer,String, Text, DateTime, ForeignKey
 import datetime
 from hashlib import md5
+import re
+from unicodedata import normalize
 
 app = Flask(__name__)
 app.config.from_pyfile('project/config.cfg')
@@ -14,6 +16,17 @@ db = SQLAlchemy(app)
 migrate = Migrate(app=app,db=db)
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
+
+
+_punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
+def slugify(text, delim=b'-'):
+    """Generates an slightly worse ASCII-only slug."""
+    result = []
+    for word in _punct_re.split(text.lower()):
+        word = normalize('NFKD', word).encode('ascii', 'ignore')
+        if word:
+            result.append(word)
+    return str(delim.join(result), 'utf-8')
 
 
 class User(db.Model):
@@ -37,17 +50,56 @@ class User(db.Model):
 class Entry(db.Model):
     __tablename__ = 'entries'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    title = Column(String(1024))
-    teaser = Column(String(1024))
+    title = Column(String(250))
+    description = Column(String(1024))
+    metatitle = Column(String(250))
     content = Column(Text)
     createdate = Column(DateTime, default=datetime.datetime.now)
     user_id = Column(Integer, ForeignKey('user.id'), default=None, nullable=False)
+    posttag = db.relationship('PostTag', backref='entries', lazy=True)
+    category_id = Column(Integer, ForeignKey('category.id'), nullable=False)
 
-    def __init__(self, title,teaser, content, user_id = 1):
+    def __init__(self, title, description, content, category_id, user_id=1):
         self.title = title
-        self.teaser = teaser
+        self.description = description
+        self.metatitle = slugify(title)
         self.content = content
         self.user_id = user_id
+        self.category_id = category_id
 
+
+class Category(db.Model):
+    __tablename__ = 'category'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    title = Column(String(250))
+    metatitle = Column(String(250))
+    posts = db.relationship('Entry', backref='category', lazy=True)
+
+    def __init__(self, title):
+        self.title = title
+        self.metatitle = slugify(title)
+
+
+class Tag(db.Model):
+    __tablename__ = 'tags'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    title = Column(String(100))
+    metatitle = Column(String(100))
+    posttag = db.relationship('PostTag', backref='tags', lazy=True)
+
+    def __init__(self, title):
+        self.title = title
+        self.metatitle = slugify(title)
+
+
+class PostTag(db.Model):
+    __tablename__ = 'posttags'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    postid = Column(Integer, ForeignKey('entries.id'), nullable=False)
+    tagid = Column(Integer, ForeignKey('tags.id'), nullable=False)
+
+    def __init__(self, entry_id, tag_id):
+        self.postid = entry_id
+        self.tagid = tag_id
 if __name__ == '__main__':
     manager.run()

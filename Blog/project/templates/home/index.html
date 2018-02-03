@@ -1,0 +1,76 @@
+{% extends 'mainpage/mainpage.html' %}
+{% block slider %}
+    <!--  Slider  -->
+    <div id="flexslider" class="fullpage-wrap small">
+        <ul class="slides">
+            <li style="background-image:url(../../static/assets/img/service1.jpg)">
+                <div class="text text-center">
+                    <h1 class="white margin-bottom-small">Share your EXP</h1>
+                    <ul class="breadcrumb white">
+                        <li><a href="#">Home</a></li>
+                        <li>Blog</li>
+                    </ul>
+                </div>
+                <div class="gradient dark"></div>
+            </li>
+        </ul>
+    </div>
+    <!--  END Slider  -->
+
+{% endblock %}
+
+{% block content %}
+    <!-- blog-contents -->
+    <div id="home-wrap" class="content-section fullpage-wrap grey-background">
+        <!--  News Section  -->
+        <section id="news" class="page">
+            <div class="news-items equal three-columns">
+
+                {% for item in lstentry %}
+
+                    <div class="single-news one-item">
+                        <article>
+                            <img src="../../static/assets/img/news1.jpg" alt="">
+                            <div class="content">
+                                        <span class="read">
+                                            <i class="material-icons">subject</i>
+                                        </span>
+                                <h3>{{ item.title }}</h3>
+                                <span class="category">Tech</span>
+                                <span class="category">Social</span>
+                                <span class="date">{{ item.createdate.strftime('%Y-%m-%d') }}</span>
+                                <p>{{ item.description }}</p>
+                            </div>
+                            <a href={{ url_for('entry_detail', uname= item.user.username, url = item.metatitle, id = item.id ) }} class="link"></a>
+                        </article>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+        </section>
+        <!--  END News Section  -->
+    </div>
+
+    <!-- end of blog-contents -->
+{% endblock %}
+
+{% block navigation %}
+    <section id="nav" class="fullpage-wrap padding-top-null grey-background">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="nav-left">
+                    <a href="single-blog-style-2.html" class="btn-alt small active shadow margin-null"><i
+                            class="icon ion-ios-arrow-left"></i><span>Older posts</span></a>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="nav-right">
+                    <a href="#" class="btn-alt small active shadow margin-null"><span>Newer posts</span><i
+                            class="icon ion-ios-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END Navigation -->
+{% endblock %}

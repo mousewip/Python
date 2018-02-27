@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>{% block title %} Blog - MouseWip {% endblock %} </title>
+
+    {% block meta %}
+
+    {% endblock %}
+
+    <link rel="shortcut icon" type="image/ico" href="/static/favicon.ico"/>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="/static/css/mdb.min.css" rel="stylesheet">
+    <link href="/static/css/compiled.min2.css" rel="stylesheet">
+    <link href="/static/css/pnotify.custom.min.css" rel="stylesheet">
+
+
+    <!-- Your custom styles (optional) -->
+    <link href="/static/css/style.css" rel="stylesheet">
+
+    {% block css_header %}
+    {% endblock %}
+</head>
+
+<body class="homepage-v5 hidden-sn animated">
+
+<!--Navigation-->
+<header>
+
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light scrolling-navbar dark stylish-color">
+        <div class="container-fluid justify-content-center align-items-center">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+                    aria-controls="navbarSupportedContent-4"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent-4">
+                <ul class="navbar-nav">
+
+                    <li class="nav-item ml-4 mb-0">
+                        <a class="nav-link waves-effect waves-light white-text font-bold"
+                           href={{ url_for('home', page = 1) }}>HOME
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown ml-4  mb-0">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light white-text font-bold"
+                           id="navbarDropdownMenuLink-2" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false"> CATEGORY </a>
+                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink-2">
+                            {% for category in lstcategory %}
+                                <li><a class="dropdown-item waves-effect waves-light"
+                                       href={{ url_for('category', url = category.metatitle, id = category.id | custom_encode, page = 1) }}>{{ category.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="nav-item ml-4 mb-0">
+                        <a class="nav-link waves-effect waves-light white-text font-bold" href="#">AUTHOR
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item dropdown ml-4  mb-0">
+                            <a href="#"
+                               class="nav-link dropdown-toggle waves-effect waves-light white-text font-up font-bold"
+                               id="navbarDropdownMenuLink-4"
+                               data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">{{ current_user.username }}</a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink-4">
+                                <a class="dropdown-item waves-effect waves-light"
+                                   href="{{ url_for('user_blog', uname = current_user.username) }}">My Blog</a>
+                                <a class="dropdown-item waves-effect waves-light"
+                                   href={{ url_for('profile') }}>Profile</a>
+                                <a class="dropdown-item waves-effect waves-light"
+                                   href={{ url_for('logout') }}>Logout</a>
+                            </div>
+                        </li>
+                        <li class="nav-item ml-4 mb-0">
+                            <a class="nav-link waves-effect waves-light white-text font-bold"
+                               href="{{ url_for('add_post') }}"><i class="fa fa-plus"></i> ADD NEW POST <span
+                                    class="sr-only">(current)</span></a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item ml-4 mb-0">
+                            <a class="nav-link waves-effect waves-light white-text font-bold"
+                               href={{ url_for('login') }}><i class="fa fa-sign-in"></i>LOGIN
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+
+                </ul>
+            </div>
+
+            <ul class="navbar-nav ml-auto nav-flex-icons light" id="homeSearch">
+                <form class="form-inline waves-effect waves-light white-text" id="frmSearch"
+                      action="{{ url_for('search') }}" method="get">
+                    <input class="form-control mr-sm-2 white-text" type="text" name="r" placeholder="Search"
+                           aria-label="Search">
+                </form>
+                <button class="button btn-outline-amber" form="frmSearch" type="submit"><i class="fa fa-search"></i>
+                </button>
+
+            </ul>
+
+        </div>
+
+    </nav>
+    <!-- /.Navbar -->
+
+</header>
+<!-- FB SDK -->
+<div id="fb-root"></div>
+
+<!-- /.FB SDK -->
+
+{% block content %}
+
+{% endblock %}
+
+<!--Footer-->
+<footer class="page-footer stylish-color mt-0 pt-0 center-on-small-only">
+
+    <!--Footer Links-->
+    <div class="container">
+
+        <!--First row-->
+        <div class="row">
+
+            <!--First column-->
+            <div class="col-md-12">
+
+                <div class="footer-socials mb-5 flex-center">
+
+                    <!--Facebook-->
+                    <a class="icons-sm fb-ic">
+                        <i class="fa fa-facebook fa-lg white-text mr-md-4"> </i>
+                    </a>
+                    <!--Twitter-->
+                    <a class="icons-sm tw-ic">
+                        <i class="fa fa-twitter fa-lg white-text mr-md-4"> </i>
+                    </a>
+                    <!--Google +-->
+                    <a class="icons-sm gplus-ic">
+                        <i class="fa fa-google-plus fa-lg white-text mr-md-4"> </i>
+                    </a>
+                    <!--Linkedin-->
+                    <a class="icons-sm li-ic">
+                        <i class="fa fa-linkedin fa-lg white-text mr-md-4"> </i>
+                    </a>
+                    <!--Instagram-->
+                    <a class="icons-sm ins-ic">
+                        <i class="fa fa-instagram fa-lg white-text mr-md-4"> </i>
+                    </a>
+                    <!--Pinterest-->
+                    <a class="icons-sm pin-ic">
+                        <i class="fa fa-pinterest fa-lg white-text"> </i>
+                    </a>
+                </div>
+            </div>
+            <!--/First column-->
+        </div>
+        <!--/First row-->
+    </div>
+    <!--/Footer Links-->
+
+    <!--Copyright-->
+    <div class="footer-copyright">
+        <div class="container-fluid">
+            © 2018 Copyright:
+            <a href="https://www.fb.com/mousewip"> MouseWip </a>
+        </div>
+    </div>
+    <!--/Copyright-->
+
+</footer>
+<!--/Footer-->
+<!-- SCRIPTS -->
+
+<!-- JQuery -->
+<script type="text/javascript" src="/static/js/jquery-3.2.1.min.js"></script>
+
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="/static/js/popper.min.js"></script>
+
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+
+<!-- MDB core JavaScript -->
+{#<script type="text/javascript" src="../../static/js/compiled.min.js"></script>#}
+<script type="text/javascript" src="/static/js/mdb.min.js"></script>
+{#<script type="text/javascript" src="../../static/js/wow.min.js"></script>#}
+<script type="text/javascript" src="/static/js/pnotify.custom.min.js"></script>
+<script type="text/javascript" src="/static/plugin/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="/static/js/jquery.twbsPagination.min.js"></script>
+<script type="text/javascript" src="/static/js/fb.min.js"></script>
+
+
+<script type="text/javascript">
+    /* WOW.js init */
+    new WOW().init();
+    var stack_bar_top = {"dir1": "down", "dir2": "right", "push": "top", "spacing1": 0, "spacing2": 0};
+
+    function show_stack_bar_top(type, title, message) {
+        PNotify.prototype.options.delay = 3000;
+        var opts = {
+            title: "Over Here",
+            text: "Check me out. I'm in a different stack.",
+            addclass: "stack-bar-top",
+            cornerclass: "",
+            width: "25%",
+            styling: 'bootstrap3',
+            animate: {
+                animate: true,
+                in_class: 'bounceIn',
+                out_class: 'bounceOut'
+            },
+            stack: stack_bar_top
+        };
+        switch (type) {
+            case 'error':
+                opts.title = title;
+                opts.text = message;
+                opts.type = "error";
+                break;
+            case 'success':
+                opts.title = title;
+                opts.text = message;
+                opts.type = "success";
+                break;
+        }
+        new PNotify(opts);
+    }
+
+    $(document).ready(function () {
+        $('.mdb-select').material_select();
+        $('.datepicker').pickadate();
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+    });
+
+    $('#btnSubscribe').off('click').on('click', function (e) {
+        e.preventDefault();
+        var email = $('#emailSubscribe').val();
+
+        $.ajax({
+            url: '{{ url_for('subscribe') }}',
+            type: 'post',
+            data: {'email': email, 'type': 'subscribe'},
+            success: function (response) {
+                var data = JSON.parse(response);
+                if (data.code == 201) {
+                    $('.spinner').hide();
+                    show_stack_bar_top('error', 'Oh no!', data.message);
+                }
+                else if (data.code == 200) {
+                    $('.spinner').hide();
+                    show_stack_bar_top('success', 'Success!', data.message);
+                }
+            }
+        })
+    });
+
+
+</script>
+
+
+{% block js_footer %}
+
+{% endblock %}
+
+</body>
+
+</html>

@@ -1,0 +1,703 @@
+{% extends 'layout/layout.html' %}
+{% block content %}
+    <!--Main layout-->
+    <main>
+
+        <!--Intro-->
+        <section id="top-section">
+            <div class="container-fluid">
+
+                <!--Excerpt-->
+                <br>
+                <h1 class="text-center dark-grey-text pb-3">
+                    <strong>{{ result['username'] }}</strong> BLOG</h1>
+
+                <p class="grey-text text-center mb-4 font-up spacing">Welcome on my blog. </p>
+
+                <!--Grid row-->
+                <div class="row flex-center">
+
+                    <!--Grid column-->
+                    <div class="col-md-10 col-xl-5">
+
+                        <p class="grey-text text-center">
+                            <em>"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
+                                voluptatum
+                                deleniti atque corrupti quos dolores.Nemo enim ipsam voluptatem quia voluptas. Nemo enim
+                                ipsam
+                                voluptatem quia voluptas sit aspernatur."</em>
+                        </p>
+
+                    </div>
+                    <!--Grid column-->
+
+                </div>
+                <!--Grid row-->
+
+            </div>
+        </section>
+        <!--/Intro-->
+
+        <!--Blog section-->
+        <section>
+            <div class="container-fluid grey lighten-4">
+                <hr class="my-5">
+                <div class="container">
+
+                    <!--Blog-->
+                    <div class="row mt-5 pt-3">
+
+                        <!--Main listing-->
+                        <div class="col-lg-8 col-12 mt-1 mx-lg-4">
+
+                            <!--Section: Blog v.3-->
+                            <section class="section extra-margins pb-3 text-center text-lg-left">
+                                {% set count = 1 %}
+                                <div class="row">
+                                    {% for item in result['lstentry'] %}
+                                        <div class="card pr-5 pl-3 pt-1">
+                                            <!--Post-->
+                                            <div class="post-wrapper wow fadeIn" data-wow-delay="0.2s">
+                                                <!--Post data-->
+                                                <h1 class="h1-responsive dark-grey-text font-bold">{{ item.title }}
+                                                </h1>
+                                                <h6>Written by
+                                                    <a href="">
+                                                        <strong>{{ result['username'] }}</strong>
+                                                    </a>, {{ item.createdate.strftime('%d-%m-%Y') }}
+
+                                                    <a class="font-small black-text mb-0 ml-2 mr-1">
+                                                        <i class="fa fa-eye"></i>{{ item.views }}</a>
+                                                    {% if  item.status %}
+                                                        <span class="badge badge-success ml-3">Publish</span>
+                                                    {% else %}
+                                                        <span class="badge badge-warning ml-3">Unpublish</span>
+                                                    {% endif %}
+
+                                                </h6>
+
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        <!--Featured image -->
+                                                        <div class="view overlay hm-white-light z-depth-1-half rounded my-blog-img">
+                                                            <img src="/static/upload/{{ item.image }}"
+                                                                 class="img-fluid " alt="">
+                                                            <div class="mask">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <!--Post excerpt-->
+                                                        <p>{{ item.description }}</p>
+
+                                                        <!--"Read more" button-->
+
+                                                        <div class="row bottom">
+                                                            <div class="col-md-6"><a
+                                                                    href="{{ url_for('entry_detail', uname= item.user.username, url = item.metatitle, id = item.id |custom_encode) }}"
+                                                                    class="btn
+                                                                btn-blue btn-md">Read more</a></div>
+                                                            <div class="col-md-3"><a
+                                                                    href="{{ url_for('edit_post', id = item.id | custom_encode) }}"
+                                                                    class="btn btn-outline-green btn-md">Edit</a>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button data-id="{{ item.id }}"
+                                                                        class="btn btn-outline-red btn-md btnDelete">
+                                                                    Delete
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+
+
+                                            </div>
+                                            <!--/.Post-->
+                                        </div>
+
+                                        <hr class="mt-2">
+                                    {% endfor %}
+                                </div>
+                            </section>
+                            <!--Section: Blog v.3-->
+
+                            <!--Pagination dark grey-->
+                            <nav class="mb-5 pb-2">
+                                <ul class="pagination" id="pagination-custom"></ul>
+                            </nav>
+                            <!--Pagination dark grey-->
+
+                        </div>
+                        <!--Main listing-->
+
+                        <!--Sidebar-->
+                        <div class="col-lg-3 col-12 mt-1">
+
+                            <!--Card-->
+                            <div class="card">
+
+                                <!--Card image-->
+                                <div class="view overlay hm-white-slight">
+                                    <img src="/static/img/girl5.jpg" class="img-fluid"
+                                         alt="">
+                                    <a>
+                                        <div class="mask"></div>
+                                    </a>
+                                </div>
+                                <!--/.Card image-->
+
+                                <!--Card content-->
+                                <div class="card-body">
+                                    <!--Title-->
+                                    <h5 class="card-title dark-grey-text text-center grey lighten-4 py-2">
+                                        <strong>{{ result['username'] }}</strong>
+                                    </h5>
+
+                                    <!--Description-->
+                                    <p class="mt-3 dark-grey-text font-small text-center">
+                                        <em>Hello, I'm {{ result['username'] }}. I love travel around the world and take
+                                            photos of
+                                            landscapes and local
+                                            people.
+                                        </em>
+                                    </p>
+
+                                    <ul class="inline-ul circle-icons list-unstyled flex-center">
+                                        <!--Facebook-->
+                                        <li>
+                                            <a class="fb-ic">
+                                                <i class="fa fa-facebook"> </i>
+                                            </a>
+                                        </li>
+                                        <!--Twitter-->
+                                        <li>
+                                            <a class="tw-ic">
+                                                <i class="fa fa-twitter mx-3"> </i>
+                                            </a>
+                                        </li>
+                                        <!--Google +-->
+                                        <li>
+                                            <a class="gplus-ic">
+                                                <i class="fa fa-google-plus"> </i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!--/.Card content-->
+
+                            </div>
+                            <!--/.Card-->
+
+                            <!-- Section: Featured posts -->
+                            <section class="section widget-content mt-5">
+                                <!--/ Card -->
+                                <div class="card card-body pb-0">
+                                    <div class="single-post">
+
+                                        <p class="font-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
+                                            <strong>TOP POSTS</strong>
+                                        </p>
+                                    </div>
+                                    {% for entry in lst_top_entry %}
+                                        <div class="single-post">
+                                            <!-- Grid row -->
+                                            <div class="row mb-4">
+                                                <div class="col-5">
+
+                                                    <!-- Image -->
+                                                    <div class="view overlay hm-white-slight">
+                                                        <img src="/static/upload/{{ entry.image }}"
+                                                             class="img-fluid z-depth-1" alt="sample image">
+                                                        <a>
+                                                            <div class="mask waves-light"></div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Excerpt -->
+                                                <div class="col-7">
+                                                    <h6 class="mt-0 font-small">
+                                                        <a href="{{ url_for('entry_detail', uname = entry.user.username, url = entry.metatitle, id = entry.id | custom_encode) }}">
+                                                            <strong>{{ entry.title }}</strong>
+                                                        </a>
+                                                    </h6>
+
+                                                    <div class="post-data">
+                                                        <p class="font-small grey-text mb-0">
+                                                            <i class="fa fa-eye"></i>{{ entry.views }}</p>
+                                                        <p class="font-small grey-text mb-0">
+                                                            <i class="fa fa-clock-o"></i>{{ entry.createdate.strftime('%d-%m-%Y') }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <!--/ Excerpt -->
+                                            </div>
+                                            <!--/ Grid row -->
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </section>
+                            <!--/ Section: Featured posts -->
+
+                            <!--Newsletter-->
+                            <section class="my-5">
+
+                                <!--/ Card -->
+                                <div class="card card-body pb-0">
+                                    <div class="single-post">
+
+                                        <p class="font-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
+                                            <strong>SUBSCRIBE</strong>
+                                        </p>
+
+                                        <!--Grid row-->
+                                        <div class="row mt-4">
+                                            <!--Grid column-->
+                                            <div class="col-md-12">
+                                                <div class="input-group md-form form-sm form-3 pl-0">
+                                                    <span class="input-group-addon white black-text"
+                                                          id="basic-addon9"><i class="fa fa-envelope"></i></span>
+                                                    <input type="text"
+                                                           class="form-control mt-0 black-border rgba-white-strong"
+                                                           id="emailSubscribe"
+                                                           placeholder="Email" aria-describedby="basic-addon9">
+                                                </div>
+
+                                                <button type="button" id="btnSubscribe"
+                                                        class="btn btn-grey btn-block mb-4">Subscribe
+                                                    now
+                                                </button>
+                                            </div>
+                                            <!--Grid column-->
+                                        </div>
+                                        <!--Grid row-->
+
+                                    </div>
+                                </div>
+                            </section>
+                            <!--Newsletter-->
+
+
+                            <!-- Tags -->
+                            <section class="my-5">
+
+                                <!--/ Card -->
+                                <div class="card card-body pb-0">
+                                    <div class="single-post">
+
+                                        <p class="font-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
+                                            <strong>TAGS</strong>
+                                        </p>
+
+                                        <!--Grid row-->
+                                        <div class="row mt-4 pl-2">
+                                            <!--Grid column-->
+                                            {% for tag in lst_tag %}
+                                                <a href="#" class="chip teal lighten-2 white-text">
+                                                    {{ tag.title }}
+                                                </a>
+                                            {% endfor %}
+
+
+                                            <!--Grid column-->
+                                        </div>
+                                        <!--Grid row-->
+
+                                    </div>
+                                </div>
+                            </section>
+                            <!--  /Tags -->
+
+                            <!-- Section: Categories -->
+                            <section class="section mb-5">
+
+                                <!--/ Card -->
+                                <div class="card card-body pb-0">
+                                    <div class="single-post">
+
+                                        <p class="font-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
+                                            <strong>CATEGORIES</strong>
+                                        </p>
+
+                                        <ul class="list-group my-4">
+                                            {% for category in lstcategory %}
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <a class=""
+                                                       href={{ url_for('category', url = category.metatitle, id = category.id | custom_encode, page = 1) }}>
+                                                        <p class="mb-0">{{ category.title }}</p>
+                                                    </a>
+                                                    <span class="badge badge-teal badge-pill font-small">{{ category.id | counter_category }}</span>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+
+                                </div>
+
+                            </section>
+                            <!-- Section: Categories -->
+                        </div>
+                        <!--Sidebar-->
+
+                    </div>
+                    <!--Blog-->
+
+                </div>
+
+            </div>
+        </section>
+        <!--Blog section-->
+
+        <!--Latest posts-->
+        <section>
+            <div class="container-fluid white mb-0 pb-0">
+                <hr class="mt-0">
+                <div class="container">
+                    <!--Grid row-->
+                    <div class="row">
+
+                        <!--Grid column-->
+                        <div class="col-lg-4 col-md-12">
+                            <div class="section mt-5">
+                                <div class="fb-page" data-href="https://www.facebook.com/MouseWip-330088644165673"
+                                     data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"
+                                     data-show-facepile="true">
+                                    <blockquote cite="https://www.facebook.com/MouseWip-330088644165673"
+                                                class="fb-xfbml-parse-ignore"><a
+                                            href="https://www.facebook.com/MouseWip-330088644165673">MouseWip</a>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-lg-4 col-md-6">
+                            <h6 class="font-bold mt-5 mb-3">LATESTS POSTS</h6>
+                            <hr class="mb-5">
+                            {% for entry in lst_latest_post %}
+
+                                <!--Grid row-->
+                                <div class="row mt-4">
+
+                                    <!--Grid column-->
+                                    <div class="col-4">
+
+                                        <!--Image-->
+                                        <div class="view overlay hm-white-slight z-depth-1 mb-3">
+                                            <img src="/static/upload/{{ entry.image }}"
+                                                 class="img-fluid" alt="Post">
+                                            <a>
+                                                <div class="mask"></div>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                    <!--Grid column-->
+
+                                    <!--Second column-->
+                                    <div class="col-8 mb-1">
+
+                                        <!--Post data-->
+                                        <div class="">
+                                            <p class="mb-1">
+                                                <a href="{{ url_for('entry_detail', uname = entry.user.username, url = entry.metatitle, id = entry.id | custom_encode) }}"
+                                                   class="text-hover font-bold">{{ entry.title }}</a>
+                                            </p>
+                                            <p class="font-small grey-text">
+                                                <em>{{ entry.createdate.strftime('%d-%m-%Y') }}</em>
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                    <!--Second column-->
+
+                                </div>
+                                <!--Grid row-->
+                            {% endfor %}
+
+
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-lg-4 col-md-6">
+                            <h6 class="font-bold mt-5 mb-3">OLDER POSTS</h6>
+                            <hr class="mb-5">
+                            {% for entry in lst_older_post %}
+                                <!--Grid row-->
+                                <div class="row mt-4">
+                                    <!--Grid column-->
+                                    <div class="col-4">
+                                        <!--Image-->
+                                        <div class="view overlay hm-white-slight z-depth-1 mb-3">
+                                            <img src="/static/upload/{{ entry.image }}"
+                                                 class="img-fluid" alt="Post">
+                                            <a>
+                                                <div class="mask"></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!--Grid column-->
+                                    <!--Second column-->
+                                    <div class="col-8 mb-1">
+                                        <!--Post data-->
+                                        <div class="">
+                                            <p class="mb-1">
+                                                <a href="{{ url_for('entry_detail', uname = entry.user.username, url = entry.metatitle, id = entry.id | custom_encode) }}"
+                                                   class="text-hover font-bold">{{ entry.title }}</a>
+                                            </p>
+                                            <p class="font-small grey-text">
+                                                <em>{{ entry.createdate.strftime('%d-%m-%Y') }}</em>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!--Second column-->
+                                </div>
+                                <!--Grid row-->
+                            {% endfor %}
+                        </div>
+                        <!--Grid column-->
+                    </div>
+                    <!--Grid row-->
+                </div>
+            </div>
+        </section>
+        <!--/Latest posts-->
+
+    </main>
+    <!--Main layout-->
+
+    <div class="spinner"></div>
+    <div class="fixed-action-btn" style="bottom: 130px; right: 24px;">
+        <a class="btn-floating btn-lg green">
+            <i class="fa fa-cog"></i>
+        </a>
+
+        <ul>
+            <li><a id="btnChangeInfo" class="btn-floating purple" data-toggle="tooltip" data-placement="left"
+                   title="Change Info"><i
+                    class="fa fa-edit"></i></a></li>
+            <li><a id="btnChangePassword" class="btn-floating teal" data-toggle="tooltip" data-placement="left"
+                   title="Change Password"><i
+                    class="fa fa-lock"></i></a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="fixed-action-btn smooth-scroll" style="bottom: 45px; right: 24px;">
+        <a href="#top-section" class="btn-floating btn-large light-blue">
+            <i class="fa fa-arrow-up"></i>
+        </a>
+    </div>
+
+    <!-- Modal confirm delete -->
+    <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-notify modal-danger" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <p class="heading lead">Confirm Delete</p>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                    </button>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="fa fa-recycle fa-4x mb-3 animated rotateIn"></i>
+                        <p>Are you sure delete this post?</p>
+                    </div>
+                </div>
+
+                <!--Footer-->
+                <div class="modal-footer justify-content-center">
+                    <a type="button" id="btnYes" class="btn btn-primary-modal">Yes</a>
+                    <a type="button" id="btnNo" class="btn btn-outline-secondary-modal waves-effect"
+                       data-dismiss="modal">No</a>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+    <!-- Modal confirm delete-->
+
+    <!-- Modal Change Info -->
+    <div class="modal fade" id="modalChangeInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Change Description</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix grey-text"></i>
+                        <input type="email" id="emailForgot" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-default" id="btnGetNewPassword">Change</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Change Info-->
+
+    <!-- Modal Change Password -->
+    <div class="modal fade" id="modalChangePassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Change Password</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix grey-text"></i>
+                        <input type="password" id="oldPassword" class="form-control">
+                        <label data-error="wrong" data-success="right" for="defaultForm-email">Old password</label>
+                    </div>
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix grey-text"></i>
+                        <input type="password" id="newPassword" class="form-control">
+                        <label data-error="wrong" data-success="right" for="defaultForm-email">New password</label>
+                    </div>
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix grey-text"></i>
+                        <input type="password" id="rePassword" class="form-control">
+                        <label data-error="wrong" data-success="right" for="defaultForm-email">Repeat password</label>
+                        <p id="errorRePass" class="text-danger text-center small font-bold"></p>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-default" id="btnSubmitChangePassword">Change</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Change Password-->
+
+{% endblock %}
+{% block js_footer %}
+    <script>
+        $(function () {
+            window.pagObj = $('#pagination-custom').twbsPagination({
+                totalPages: {{ result['total_page'] }},
+                visiblePages: 10,
+                startPage: {{ result['page'] }},
+                onPageClick: function (event, page) {
+                    console.info(page + ' (from options)');
+                }
+            }).on('page', function (event, page) {
+                var url = window.location.href;
+                var rs = url.split('/');
+                var hostname = rs[0] + '//' + rs[2];
+
+                window.location.href = hostname + "/{{ result['username'] }}/page/" + page;
+            });
+        });
+
+        $('.btnDelete').off('click').on('click', function (e) {
+            e.preventDefault();
+            PNotify.removeAll();
+            var btnDelete = $(this);
+            var id = $(this).data('id');
+
+            $('#modalConfirmDelete').modal('toggle');
+            $('#btnYes').click(function (ey) {
+                ey.preventDefault();
+                $.ajax({
+                    url: '{{ url_for('delete_post') }}',
+                    type: 'POST',
+                    data: {'id': id},
+                    success: function (response) {
+                        var data = JSON.parse(response);
+                        if (data.code == 201 || data.code == 202) {
+                            $('#modalConfirmDelete').modal('hide');
+                            show_stack_bar_top('error', 'Oh no!', data.message);
+                        }
+                        else if (data.code == 200) {
+                            window.location.href = "{{ url_for('user_blog', uname = result['username']) }}";
+                        }
+                    }
+                });
+            });
+            $('#btnNo').click(function (en) {
+                en.preventDefault();
+                $('#modalConfirmDelete').modal('hide');
+            });
+        });
+
+        $('#rePassword').focusout(function () {
+                var pass = $('#newPassword').val();
+                var repass = $('#rePassword').val();
+                if (pass !== repass) {
+                    $('#errorRePass').text("Confirm password does not match the password.");
+                }
+            }
+        );
+
+        $('#rePassword').focusin(function () {
+            $('#errorRePass').text("");
+        });
+
+        $('#btnChangePassword').click(function (e) {
+            e.preventDefault();
+            $('#modalChangePassword').modal('toggle');
+            $('#btnSubmitChangePassword').unbind();
+            $('#btnSubmitChangePassword').click(function (ec) {
+                ec.preventDefault();
+                $('.spinner').show();
+                var oldpass = $('#oldPassword').val();
+                var pass = $('#newPassword').val();
+                var repass = $('#rePassword').val();
+                $('#modalChangePassword').modal('toggle');
+                $('#modalChangePassword').find('input[type="password"]').val('');
+                if (oldpass === '' || pass === '' || repass === '')
+                    return;
+                if (pass !== repass) {
+                    $('.spinner').hide();
+                    show_stack_bar_top('error', 'Oh no!', "Confirm password does not match the password.");
+                } else {
+                    $.ajax({
+                        url: '{{ url_for('change_password') }}',
+                        type: 'post',
+                        data: {'oldpass': oldpass, 'newpass': pass, 'repass': repass},
+                        success: function (response) {
+                            var data = JSON.parse(response);
+                            if (data.code === 201) {
+                                $('.spinner').hide();
+                                show_stack_bar_top('error', 'Oh no!', data.message);
+                            }
+                            else if (data.code === 200) {
+                                $('.spinner').hide();
+                                show_stack_bar_top('success', 'Congratulation!', data.message);
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR);
+                            $('.spinner').hide();
+                            show_stack_bar_top('error', 'Oh no!', jqXHR.status + '(' + errorThrown + ')');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

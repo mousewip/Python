@@ -1,1 +1,1 @@
-from project.controllers import home, account
+from project.controllers import home, account, filemanager, helper, post

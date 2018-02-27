@@ -2,73 +2,154 @@
 
 from project import app
 from project.models.model import *
-from flask import render_template, request, redirect, jsonify, json, url_for
+from flask import render_template, request, redirect, json, url_for
 import math, base64
-from sqlalchemy.orm import joinedload
-import jinja2
-
-app.jinja_env.filters['b64encode'] = base64.b64encode
-
-@app.route('/')
-@app.route('/page/<page>')
-def home(page = 1):
-    # db.drop_all()
-    # db.create_all()
-    per_page = request.args.get('limit', 9, type=int)
-
-    lst_entry  = Entry.query.join(User, Entry.user_id == User.id).order_by(Entry.id).limit(per_page).offset((int(page) - 1) * per_page).all()
-    if page == 1 and len(lst_entry) < per_page:
-        total = len(lst_entry)
-    else:
-        total = Entry.query.count()
-
-    total_page = math.ceil(total / per_page)
-    print(total_page)
-    print(total)
-    return render_template('home/index.html', lstentry = lst_entry, total_page = total_page, page = int(page), limit = per_page)
+from project.controllers.helper import *
+import os
+from werkzeug.utils import secure_filename
 
 
-@app.route('/<uname>/entry/<url>-<id>.html')
-def entry_detail(uname,url, id):
-    # entri_id = request
-    user = User.query.filter(User.username == uname).first_or_404()
-    entry = Entry.query.filter(Entry.id == id , Entry.user_id == user.id).first_or_404()
-    return render_template('entry/notfound.html', entry=entry, user = user)
+@app.context_processor
+def load_category():
+    lst_category = Category.query.all()
+    return dict(lstcategory=lst_category)
 
-@app.route('/<uname>')
-@app.route('/<uname>/page/<page>')
-@app.route('/<uname>/entry')
-@app.route('/<uname>/entry/page/<page>')
-def user_entry(uname, page = 1):
-    per_page = request.args.get('limit', 9, type=int)
 
-    user = User.query.filter(User.username == uname).first_or_404()
-    lst_entry = Entry.query.filter(Entry.user_id == user.id).order_by(Entry.id).limit(per_page).offset((int(page) - 1) * per_page).all()
+@app.template_filter('custom_encode')
+def encode_processor(id):
+    return hash_id_encode(id)
 
-    if page == 1 and len(lst_entry) < per_page:
-        total = len(lst_entry)
-    else:
-        total = Entry.query.filter(Entry.user_id == user.id).count()
 
-    total_page = math.ceil(total / per_page)
-    return render_template('entry/user_entry.html', lstentry=lst_entry, total_page = total_page, page = int(page), username = uname, limit = per_page)
+@app.template_filter('counter_category')
+def counter_processor(id):
+    return Entry.query.filter(Entry.category_id == id).count()
+
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('entry/notfound.html')
+    return render_template('post/notfound.html')
 
 
-@app.route('/post/add', methods=['GET', 'POST'])
-@login_required
-def add_post():
-    if(request.method == 'GET'):
-        return render_template('entry/add.html')
+@app.route('/')
+@app.route('/page/<page>')
+def home(page=1):
+    # db.drop_all()
+    # db.create_all()
+    per_page = request.args.get('limit', 10, type=int)
+
+    lst_entry = Entry.query.filter(Entry.status == 1) \
+        .order_by(Entry.id.desc()).limit(per_page) \
+        .offset((int(page) - 1) * per_page).all()
+    if page == 1 and len(lst_entry) < per_page:
+        total = len(lst_entry)
     else:
-        title = request.form['title']
-        content = request.form['txtContent']
-        description = request.form['description']
+        total = Entry.query.filter(Entry.status == 1).count()
 
-        entry = Entry(title, description, content, current_user.id)
-        db.session.add(entry)
-        db.session.commit()
-        return redirect('/panel')
+    total_page = math.ceil(total / per_page)
+    result = {
+        'lstentry': lst_entry,
+        'total_page': total_page,
+        'page': int(page),
+        'limit': per_page
+    }
+    return render_template('home/index.html', result=result)
+
+
+@app.route('/<uname>')
+@app.route('/<uname>/page/<page>')
+def user_blog(uname, page=1):
+    per_page = request.args.get('limit', 10, type=int)
+
+    user = User.query.filter(User.username == uname).first_or_404()
+    lst_tmp = Entry.query \
+        .filter(Entry.user_id == user.id) \
+        .order_by(Entry.id.desc())
+    if (hasattr(current_user, 'id') and user.id == current_user.id):
+        lst_entry = lst_tmp.limit(per_page).offset((int(page) - 1) * per_page).all()
+    else:
+        lst_entry = lst_tmp.filter(Entry.status == 1).limit(per_page).offset((int(page) - 1) * per_page).all()
+
+    if page == 1 and len(lst_entry) < per_page:
+        total = len(lst_entry)
+    else:
+        if (hasattr(current_user, 'id') and user.id == current_user.id):
+            total = Entry.query.filter(Entry.user_id == user.id).count()
+        else:
+            total = Entry.query.filter(Entry.user_id == user.id, Entry.status == 1).count()
+
+    total_page = math.ceil(total / per_page)
+    result = {
+        'lstentry': lst_entry,
+        'total_page': total_page,
+        'page': int(page),
+        'username': uname,
+        'limit': per_page
+    }
+    if (hasattr(current_user, 'id') and user.id == current_user.id):
+        return render_template('home/my_blog.html', result=result)
+    else:
+        return render_template('home/user_post.html', result=result)
+
+
+@app.route('/category/<url>-<id>/page/<page>')
+@app.route('/category/<url>-<id>')
+def category(url, id, page=1):
+    c_id = has_id_decode(id)
+
+    per_page = request.args.get('limit', 10, type=int)
+    lst_post = Entry.query.filter(Entry.category_id == c_id, Entry.status == 1) \
+        .order_by(Entry.id.desc()) \
+        .limit(per_page).offset((int(page) - 1) * per_page).all()
+
+    if page == 1 and len(lst_post) < per_page:
+        total = len(lst_post)
+    else:
+        total = Entry.query.filter(Entry.category_id == c_id, Entry.status == 1).count()
+    total_page = math.ceil(total / per_page)
+    result = {
+        'lstentry': lst_post,
+        'total_page': total_page,
+        'page': int(page),
+        'limit': per_page,
+        'url': url,
+        'id': c_id
+    }
+
+    return render_template('home/category.html', result=result)
+
+
+@app.route('/search', methods=['POST', 'GET'])
+@app.route('/search/page/<page>', methods=['POST', 'GET'])
+def search(page=1):
+    per_page = request.args.get('limit', 10, type=int)
+    r = request.args.get('r', type=str)
+
+    lst_entry = Entry.query.filter(Entry.status == 1) \
+        .filter(
+        or_(Entry.title.like('%' + r + '%'), Entry.description.like('%' + r + '%'), Entry.content.like('%' + r + '%'))) \
+        .order_by(Entry.id.desc()).limit(per_page) \
+        .offset((int(page) - 1) * per_page).all()
+    if page == 1 and len(lst_entry) < per_page:
+        total = len(lst_entry)
+    else:
+        total = Entry.query.filter(Entry.status == 1).count()
+
+    total_page = math.ceil(total / per_page)
+    result = {
+        'lstentry': lst_entry,
+        'total_page': total_page,
+        'page': int(page),
+        'limit': per_page
+    }
+    return render_template('home/index.html', result=result)
+
+
+@app.route('/tags/listtags', methods=['POST'])
+@login_required
+def load_list_tags():
+    if request.form['tags_list'] == 'get_data':
+        lst_tags = []
+        tags = Tag.query.all()
+        [lst_tags.append(tag.title) for tag in tags]
+        return json.dumps(lst_tags)
+    else: pass

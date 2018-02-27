@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
-from sqlalchemy import Column,Integer,String, Text, DateTime, ForeignKey
+from sqlalchemy import Column,Integer,String, Text, DateTime, ForeignKey, BigInteger
 import datetime
 from hashlib import md5
 import re
@@ -33,9 +33,13 @@ class User(db.Model):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String, nullable=False, unique=True)
-    email = Column(String, nullable=False)
+    email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
-
+    description = Column(String(1024), default=None)
+    avatar = Column(String(250), default=None)
+    cover = Column(String(250), default=None)
+    facebook_id = Column(BigInteger, default=None)
+    phone = Column(String(20), default=None)
     entries = db.relationship('Entry', backref='user', lazy=True)
 
     def __init__(self, uname, email, password):
@@ -54,8 +58,11 @@ class Entry(db.Model):
     description = Column(String(1024))
     metatitle = Column(String(250))
     content = Column(Text)
+    image = Column(String(250), default=None)
+    views = Column(Integer, default=0)
     createdate = Column(DateTime, default=datetime.datetime.now)
     user_id = Column(Integer, ForeignKey('user.id'), default=None, nullable=False)
+    status = Column(Integer, default=1)
     posttag = db.relationship('PostTag', backref='entries', lazy=True)
     category_id = Column(Integer, ForeignKey('category.id'), nullable=False)
 

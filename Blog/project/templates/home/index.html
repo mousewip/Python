@@ -1,76 +1,424 @@
-{% extends 'mainpage/mainpage.html' %}
-{% block slider %}
-    <!--  Slider  -->
-    <div id="flexslider" class="fullpage-wrap small">
-        <ul class="slides">
-            <li style="background-image:url(../../static/assets/img/service1.jpg)">
-                <div class="text text-center">
-                    <h1 class="white margin-bottom-small">Share your EXP</h1>
-                    <ul class="breadcrumb white">
-                        <li><a href="#">Home</a></li>
-                        <li>Blog</li>
-                    </ul>
-                </div>
-                <div class="gradient dark"></div>
-            </li>
-        </ul>
-    </div>
-    <!--  END Slider  -->
-
-{% endblock %}
-
+{% extends 'layout/layout.html' %}
 {% block content %}
-    <!-- blog-contents -->
-    <div id="home-wrap" class="content-section fullpage-wrap grey-background">
-        <!--  News Section  -->
-        <section id="news" class="page">
-            <div class="news-items equal three-columns">
+    <!--Main layout-->
+    <main>
 
-                {% for item in lstentry %}
+        <!--Intro-->
+        <section id="top-section">
+            <div class="container-fluid">
 
-                    <div class="single-news one-item">
-                        <article>
-                            <img src="../../static/assets/img/news1.jpg" alt="">
-                            <div class="content">
-                                        <span class="read">
-                                            <i class="material-icons">subject</i>
-                                        </span>
-                                <h3>{{ item.title }}</h3>
-                                <span class="category">Tech</span>
-                                <span class="category">Social</span>
-                                <span class="date">{{ item.createdate.strftime('%Y-%m-%d') }}</span>
-                                <p>{{ item.description }}</p>
-                            </div>
-                            <a href={{ url_for('entry_detail', uname= item.user.username, url = item.metatitle, id = item.id ) }} class="link"></a>
-                        </article>
+                <!--Excerpt-->
+                <br>
+                <h1 class="text-center dark-grey-text pb-3">
+                    <strong>TECHNICAL</strong> BLOG</h1>
+
+                <p class="grey-text text-center mb-4 font-up spacing">Share your EXP </p>
+
+                <!--Grid row-->
+                <div class="row flex-center">
+
+                    <!--Grid column-->
+                    <div class="col-md-10 col-xl-5">
+
+                        <p class="grey-text text-center">
+                            <em>"Chia sẽ kiến thức - Nâng cao bản thân"</em>
+                        </p>
+
                     </div>
+                    <!--Grid column-->
 
-                {% endfor %}
+                </div>
+                <!--Grid row-->
 
             </div>
         </section>
-        <!--  END News Section  -->
+        <!--/Intro-->
+
+        <!--Blog section-->
+        <section>
+            <div class="container-fluid grey lighten-4">
+                <hr class="my-5">
+                <div class="container">
+                    <!--Blog-->
+                    <div class="row mt-5 pt-3">
+                        <!--Main listing-->
+                        <div class="col-lg-8 col-12 mt-1 mx-lg-4">
+                            <!--Section: Blog v.3-->
+                            <section class="section extra-margins pb-3 text-center text-lg-left">
+                                {% set count = 1 %}
+                                <div class="row text-center">
+                                    {% for item in result['lstentry'] %}
+                                        <!--Grid column-->
+                                        <div class="col-md-6 mb-r">
+                                            <!--Card-->
+                                            <div class="card text-left">
+
+                                                <!--Card image-->
+                                                <div class="view overlay hm-white-slight ">
+                                                    <img src="/static/upload/{{ item.image }}"
+                                                         class="img-fluid" alt="{{ item.category.title }}">
+                                                    <a>
+                                                        <div class="mask"></div>
+                                                    </a>
+                                                </div>
+                                                <!--/.Card image-->
+
+                                                <!--Card content-->
+                                                <div class="card-body mx-4">
+                                                    <a href="" class="teal-text text-center font-up font-small">
+                                                        <h6 class="mb-3 mt-3">
+                                                            <strong><a
+                                                                    href={{ url_for('category', url = item.category.metatitle, id = item.category_id | custom_encode, page = 1) }}>{{ item.category.title }}</a></strong>
+                                                            <a class="dark-grey-text font-small">
+                                                                - {{ item.createdate.strftime('%d-%m-%Y') }}</a>
+                                                            <a class="font-small black-text mb-0 ml-2">
+                                                                <i class="fa fa-eye mr-1"></i> {{ item.views }} </a>
+                                                        </h6>
+                                                    </a>
+                                                    <!--Title-->
+                                                    <h4 class="card-title">
+                                                        <strong class="line-clamp-title">{{ item.title }}</strong>
+                                                    </h4>
+                                                    <hr>
+                                                    <!--Text-->
+                                                    <p class="dark-grey-text mb-4 line-clamp">{{ item.description }}</p>
+
+                                                    <p>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <a class="indigo-text text-left mb-0 "
+                                                               href="{{ url_for('user_blog', uname = item.user.username) }}">{{ item.user.username }}</a>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <a class="text-left mb-0 font-up font-small spacing font-bold"
+                                                               href={{ url_for('entry_detail', uname= item.user.username, url = item.metatitle, id = item.id | custom_encode ) }}>
+                                                                read more
+                                                                <i class="fa fa-chevron-circle-right"
+                                                                   aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
+
+                                                    </div>
+                                                    </p>
+                                                </div>
+                                                <!--/.Card content-->
+
+                                            </div>
+                                            <!--/.Card-->
+
+                                        </div>
+                                        <!--Grid column-->
+                                    {% endfor %}
+                                </div>
+                            </section>
+                            <!--Section: Blog v.3-->
+
+                            <!--Pagination dark grey-->
+                            <nav class="mb-5 pb-2">
+                                <ul class="pagination" id="pagination-custom"></ul>
+                            </nav>
+                            <!--Pagination dark grey-->
+
+                        </div>
+                        <!--Main listing-->
+
+                        <!--Sidebar-->
+                        <div class="col-lg-3 col-12 mt-1">
+                            <!-- Section: Featured posts -->
+                            <section class="section widget-content">
+                                <!--/ Card -->
+                                <div class="card card-body pb-0">
+                                    <div class="single-post">
+
+                                        <p class="font-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
+                                            <strong>TOP POSTS</strong>
+                                        </p>
+                                    </div>
+                                    {% for entry in lst_top_entry %}
+                                        <div class="single-post">
+                                            <!-- Grid row -->
+                                            <div class="row mb-4">
+                                                <div class="col-5">
+
+                                                    <!-- Image -->
+                                                    <div class="view overlay hm-white-slight">
+                                                        <img src="/static/upload/{{ entry.image }}"
+                                                             class="img-fluid z-depth-1" alt="sample image">
+                                                        <a>
+                                                            <div class="mask waves-light"></div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Excerpt -->
+                                                <div class="col-7">
+                                                    <h6 class="mt-0 font-small">
+                                                        <a href="{{ url_for('entry_detail', uname = entry.user.username, url = entry.metatitle, id = entry.id | custom_encode) }}">
+                                                            <strong>{{ entry.title }}</strong>
+                                                        </a>
+                                                    </h6>
+
+                                                    <div class="post-data">
+                                                        <p class="font-small grey-text mb-0">
+                                                            <i class="fa fa-eye"></i>{{ entry.views }}</p>
+                                                        <p class="font-small grey-text mb-0">
+                                                            <i class="fa fa-clock-o"></i>{{ entry.createdate.strftime('%d-%m-%Y') }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <!--/ Excerpt -->
+                                            </div>
+                                            <!--/ Grid row -->
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </section>
+                            <!--/ Section: Featured posts -->
+
+                            <!--Newsletter-->
+                            <section class="my-5">
+
+                                <!--/ Card -->
+                                <div class="card card-body pb-0">
+                                    <div class="single-post">
+
+                                        <p class="font-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
+                                            <strong>SUBSCRIBE</strong>
+                                        </p>
+
+                                        <!--Grid row-->
+                                        <div class="row mt-4">
+                                            <!--Grid column-->
+                                            <div class="col-md-12">
+                                                <div class="input-group md-form form-sm form-3 pl-0">
+                                                    <span class="input-group-addon white black-text"
+                                                          id="basic-addon9"><i class="fa fa-envelope"></i></span>
+                                                    <input type="text"
+                                                           class="form-control mt-0 black-border rgba-white-strong"
+                                                           id="emailSubscribe"
+                                                           placeholder="Email" aria-describedby="basic-addon9">
+                                                </div>
+
+                                                <button type="button" id="btnSubscribe"
+                                                        class="btn btn-grey btn-block mb-4">Subscribe
+                                                    now
+                                                </button>
+                                            </div>
+                                            <!--Grid column-->
+                                        </div>
+                                        <!--Grid row-->
+
+                                    </div>
+                                </div>
+                            </section>
+                            <!--Newsletter-->
+
+                            <!-- Tags -->
+                            <section class="my-5">
+
+                                <!--/ Card -->
+                                <div class="card card-body pb-0">
+                                    <div class="single-post">
+
+                                        <p class="font-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
+                                            <strong>TAGS</strong>
+                                        </p>
+
+                                        <!--Grid row-->
+                                        <div class="row mt-4 pl-2">
+                                            <!--Grid column-->
+                                            {% for tag in lst_tag %}
+                                                <a href="#" class="chip teal lighten-2 white-text">
+                                                    {{ tag.title }}
+                                                </a>
+                                            {% endfor %}
+
+
+                                            <!--Grid column-->
+                                        </div>
+                                        <!--Grid row-->
+
+                                    </div>
+                                </div>
+                            </section>
+                            <!--  /Tags -->
+
+                            <!-- Section: Categories -->
+                            <section class="section mb-5">
+
+                                <!--/ Card -->
+                                <div class="card card-body pb-0">
+                                    <div class="single-post">
+
+                                        <p class="font-bold dark-grey-text text-center spacing grey lighten-4 py-2 mb-4">
+                                            <strong>CATEGORIES</strong>
+                                        </p>
+
+                                        <ul class="list-group my-4">
+                                            {% for category in lstcategory %}
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <a class=""
+                                                       href={{ url_for('category', url = category.metatitle, id = category.id | custom_encode, page = 1) }}>
+                                                        <p class="mb-0">{{ category.title }}</p>
+                                                    </a>
+                                                    <span class="badge badge-teal badge-pill font-small">{{ category.id | counter_category }}</span>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+
+                                </div>
+
+                            </section>
+                            <!-- Section: Categories -->
+
+                        </div>
+                        <!--Sidebar-->
+                    </div>
+                    <!--Blog-->
+                </div>
+            </div>
+        </section>
+        <!--Blog section-->
+
+        <!--Latest posts-->
+        <section>
+            <div class="container-fluid white mb-0 pb-0">
+                <hr class="mt-0">
+                <div class="container">
+                    <!--Grid row-->
+                    <div class="row">
+
+                        <!--Grid column-->
+                        <div class="col-lg-4 col-md-12">
+                            <div class="section mt-5">
+                                <div class="fb-page" data-href="https://www.facebook.com/MouseWip-330088644165673"
+                                     data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"
+                                     data-show-facepile="true">
+                                    <blockquote cite="https://www.facebook.com/MouseWip-330088644165673"
+                                                class="fb-xfbml-parse-ignore"><a
+                                            href="https://www.facebook.com/MouseWip-330088644165673">MouseWip</a>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-lg-4 col-md-6">
+                            <h6 class="font-bold mt-5 mb-3">LATESTS POSTS</h6>
+                            <hr class="mb-5">
+                            {% for entry in lst_latest_post %}
+
+                                <!--Grid row-->
+                                <div class="row mt-4">
+
+                                    <!--Grid column-->
+                                    <div class="col-4">
+
+                                        <!--Image-->
+                                        <div class="view overlay hm-white-slight z-depth-1 mb-3">
+                                            <img src="/static/upload/{{ entry.image }}"
+                                                 class="img-fluid" alt="Post">
+                                            <a>
+                                                <div class="mask"></div>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                    <!--Grid column-->
+
+                                    <!--Second column-->
+                                    <div class="col-8 mb-1">
+
+                                        <!--Post data-->
+                                        <div class="">
+                                            <p class="mb-1">
+                                                <a href="{{ url_for('entry_detail', uname = entry.user.username, url = entry.metatitle, id = entry.id | custom_encode) }}"
+                                                   class="text-hover font-bold">{{ entry.title }}</a>
+                                            </p>
+                                            <p class="font-small grey-text">
+                                                <em>{{ entry.createdate.strftime('%d-%m-%Y') }}</em>
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                    <!--Second column-->
+
+                                </div>
+                                <!--Grid row-->
+                            {% endfor %}
+
+
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-lg-4 col-md-6">
+                            <h6 class="font-bold mt-5 mb-3">OLDER POSTS</h6>
+                            <hr class="mb-5">
+                            {% for entry in lst_older_post %}
+                                <!--Grid row-->
+                                <div class="row mt-4">
+                                    <!--Grid column-->
+                                    <div class="col-4">
+                                        <!--Image-->
+                                        <div class="view overlay hm-white-slight z-depth-1 mb-3">
+                                            <img src="/static/upload/{{ entry.image }}"
+                                                 class="img-fluid" alt="Post">
+                                            <a>
+                                                <div class="mask"></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!--Grid column-->
+                                    <!--Second column-->
+                                    <div class="col-8 mb-1">
+                                        <!--Post data-->
+                                        <div class="">
+                                            <p class="mb-1">
+                                                <a href="{{ url_for('entry_detail', uname = entry.user.username, url = entry.metatitle, id = entry.id | custom_encode) }}"
+                                                   class="text-hover font-bold">{{ entry.title }}</a>
+                                            </p>
+                                            <p class="font-small grey-text">
+                                                <em>{{ entry.createdate.strftime('%d-%m-%Y') }}</em>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!--Second column-->
+                                </div>
+                                <!--Grid row-->
+                            {% endfor %}
+                        </div>
+                        <!--Grid column-->
+                    </div>
+                    <!--Grid row-->
+                </div>
+            </div>
+        </section>
+        <!--/Latest posts-->
+
+    </main>
+    <!--Main layout-->
+    <div class="fixed-action-btn smooth-scroll" style="bottom: 45px; right: 24px;">
+        <a href="#top-section" class="btn-floating btn-large light-blue">
+            <i class="fa fa-arrow-up"></i>
+        </a>
     </div>
-
-    <!-- end of blog-contents -->
 {% endblock %}
-
-{% block navigation %}
-    <section id="nav" class="fullpage-wrap padding-top-null grey-background">
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="nav-left">
-                    <a href="single-blog-style-2.html" class="btn-alt small active shadow margin-null"><i
-                            class="icon ion-ios-arrow-left"></i><span>Older posts</span></a>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="nav-right">
-                    <a href="#" class="btn-alt small active shadow margin-null"><span>Newer posts</span><i
-                            class="icon ion-ios-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- END Navigation -->
+{% block js_footer %}
+    <script>
+        $(function () {
+            window.pagObj = $('#pagination-custom').twbsPagination({
+                totalPages: {{ result['total_page'] }},
+                visiblePages: 10,
+                startPage: {{ result['page'] }},
+                onPageClick: function (event, page) {
+                    console.info(page + ' (from options)');
+                }
+            }).on('page', function (event, page) {
+                window.location.href = "/page/" + page;
+            });
+        });
+    </script>
 {% endblock %}

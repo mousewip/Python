@@ -1,1 +1,1 @@
-from project.models import model
+from project.models import model, logic

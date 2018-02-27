@@ -1,0 +1,351 @@
+{% extends 'layout/layout.html' %}
+{% block title %}
+    {{ entry.title }}
+{% endblock %}
+
+{% block meta %}
+        <meta property="og:url"
+              content="http://mousewip.tk/{{ entry.user.username }}/post/{{ entry.metatitle }}-{{ entry.id | custom_encode }}.html"/>
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="{{ entry.title }}"/>
+        <meta property="og:description" content="{{ entry.description }}"/>
+        <meta property="og:site_name" content="mousewip.tk"/>
+
+        <meta property="og:image" content="http://mousewip.tk/static/upload/{{ entry.image }}"/>
+    {% endblock %}
+
+{% block content %}
+    <!--Main Layout-->
+    <main>
+
+        <div class="container-fluid mb-5 mt-5">
+
+            <!--Grid row-->
+            <div class="row" style="margin-top: -100px;">
+
+                <!--Grid column-->
+                <div class="col-md-12 px-lg-5">
+                    <!--Card-->
+                    <div class="card pb-5 mx-md-3">
+                        <div class="card-body">
+
+                            <div class="container">
+
+                                <!--Section heading-->
+                                <h1 class="section-heading h1 pt-4 mb-3" id="top-section">
+                                    <strong>{{ entry.title }}</strong>
+                                </h1>
+
+                                <div class="row">
+                                    <div class="col-md-12 col-xl-12 d-flex justify-content-center">
+                                        <p class="font-small dark-grey-text mb-1">
+                                            <strong>Author:</strong>{{ user.username }}</p>
+                                        <p class="font-small grey-text mb-0 ml-3">
+                                            <i class="fa fa-clock-o dark-grey-text"></i> {{ entry.createdate.strftime('%d-%m-%Y') }}
+                                        </p>
+                                        <p class="font-small grey-text mb-0 ml-3">
+                                            <i class="fa fa-eye dark-grey-text"></i> {{ entry.views }}
+                                        </p>
+                                    </div>
+                                    <div class="col-md-12 col-xl-12 d-flex justify-content-center">
+                                        <p class="font-small dark-grey-text mb-1">
+                                            {{ entry.description }}</p>
+                                    </div>
+                                </div>
+
+                                <!--Grid row-->
+                                <div class="row pt-lg-5 pt-3">
+
+                                    <!--Grid column-->
+                                    <div class="col-md-12 col-xl-12">
+                                        <!--Grid row-->
+                                        <div class="row mt-3">
+                                            <p class="dark-grey-text article">{{ entry.content | safe }}</p>
+                                        </div>
+                                        <!--Grid row-->
+                                        <!--Grid row-->
+                                        <div class="row my-5">
+
+                                            <!--Grid column-->
+                                            <div class="col-md-12 text-center">
+
+                                                <h4 class="text-center font-bold dark-grey-text mt-3 mb-3">
+                                                    <strong>Share this post: </strong>
+                                                </h4>
+                                                <div class="fb-share-button"
+                                                     data-layout="button_count" data-size="large"
+                                                     data-mobile-iframe="true">
+                                                </div>
+
+
+                                                <!--Twitter-->
+                                                <button type="button" class="btn btn-tw btn-sm">
+                                                    <i class="fa fa-twitter left"></i> Twitter
+                                                </button>
+                                                <!--Google +-->
+                                                <div class="g-plusone" data-size="tall"></div>
+
+                                            </div>
+                                            <!--Grid column-->
+
+                                        </div>
+                                        <!--Grid row-->
+
+                                        <hr class="mt-5">
+
+                                        <!--Comments facebook-->
+                                        <section>
+                                            <!--Main wrapper-->
+                                            <div class="comments-list text-center text-md-left">
+                                                <div class="fb-comments" data-width="100%"
+                                                     data-numposts="5"></div>
+                                            </div>
+                                            <!--/.Main wrapper-->
+
+
+                                        </section>
+                                        <!--/Comments-->
+                                        <hr>
+
+                                        <!--Posts-->
+                                        <section class="text-left mt-4">
+
+                                            <h4 class="font-bold mt-5 mb-5 text-center">
+                                                <strong>Latest news</strong>
+                                            </h4>
+
+                                            <!--Carousel Wrapper-->
+                                            <div id="multi-item-example" class="carousel slide carousel-multi-item"
+                                                 data-ride="carousel">
+
+                                                <!--Indicators-->
+                                                <ol class="carousel-indicators">
+                                                    <li data-target="#multi-item-example" data-slide-to="0"
+                                                        class="active"></li>
+                                                </ol>
+                                                <!--/.Indicators-->
+
+                                                <!--Slides-->
+                                                <div class="carousel-inner" role="listbox">
+
+                                                    <!--First slide-->
+                                                    <div class="carousel-item active">
+                                                        <!--Grid row-->
+                                                        <div class="row mb-4">
+                                                            {% for item in latests %}
+                                                                <!--Grid column-->
+                                                                <div class="col-lg-4 text-left mt-3">
+
+                                                                    <!--Card-->
+                                                                    <div class="card">
+
+                                                                        <!--Card image-->
+                                                                        <div class="view overlay hm-white-slight">
+                                                                            <img src="/static/upload/{{ item.image }}"
+                                                                                 class="img-fluid" alt="sample image">
+                                                                            <a>
+                                                                                <div class="mask"></div>
+                                                                            </a>
+                                                                        </div>
+                                                                        <!--/.Card image-->
+
+                                                                        <!--Card content-->
+                                                                        <div class="card-body">
+                                                                            <!--Title-->
+                                                                            <h4 class="card-title">
+                                                                                <strong>{{ item.title }}</strong>
+                                                                            </h4>
+                                                                            <hr>
+
+                                                                            <p class="font-small font-bold dark-grey-text mb-1">
+                                                                                <i class="fa fa-clock-o"></i> {{ item.createdate.strftime('%d-%m-%Y') }}
+                                                                            </p>
+                                                                            <p class="font-small grey-text mb-0"><a
+                                                                                    href="{{ url_for('user_blog', uname = item.user.username) }}">{{ item.user.username }} </a>
+                                                                            </p>
+                                                                            <p class="text-right mb-0 font-small font-bold">
+                                                                                <a href={{ url_for('entry_detail', uname= item.user.username, url = item.metatitle, id = item.id | custom_encode ) }}>read
+                                                                                    more
+                                                                                    <i class="fa fa-angle-right"></i>
+                                                                                </a>
+                                                                            </p>
+                                                                        </div>
+                                                                        <!--/.Card content-->
+
+                                                                    </div>
+                                                                    <!--/.Card-->
+                                                                </div>
+                                                                <!--Grid column-->
+                                                            {% endfor %}
+                                                        </div>
+                                                        <!--/Grid row-->
+                                                    </div>
+                                                    <!--/.First slide-->
+                                                </div>
+                                                <!--/.Slides-->
+
+                                            </div>
+                                            <!--/.Carousel Wrapper-->
+
+
+                                        </section>
+                                        <!--/.Posts-->
+
+                                    </div>
+                                    <!--/Grid column-->
+
+                                </div>
+                                <!--/Grid row-->
+
+                            </div>
+                            <!--Grid column-->
+
+                        </div>
+                        <!--Grid row-->
+
+                    </div>
+                    <!--/Card-->
+                </div>
+                <!--/Grid column-->
+            </div>
+            <!--/Grid row-->
+        </div>
+
+    </main>
+    <!--Main Layout-->
+    {% if entry.user_id == current_user.id %}
+        <div class="fixed-action-btn" style="bottom: 130px; right: 24px;">
+            <a class="btn-floating btn-lg green">
+                <i class="fa fa-pencil"></i>
+            </a>
+
+            <ul>
+                <li><a id="btnEdit" class="btn-floating green" data-toggle="tooltip" data-placement="left"
+                       title="Edit Post"><i
+                        class="fa fa-edit"></i></a></li>
+                <li><a id="btnChangeStatus" class="btn-floating purple" data-toggle="tooltip" data-placement="left"
+                       title="{% if entry.status %} UnPublish Post {% else %} Publish Post {% endif %}"><i
+                        class="fa fa-check"></i></a></li>
+                <li><a id="btnDelete" class="btn-floating red" data-toggle="tooltip" data-placement="left"
+                       title="Delete Post"><i
+                        class="fa fa-trash"></i></a>
+                </li>
+            </ul>
+        </div>
+
+
+        <!-- Central Modal Medium Danger -->
+        <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-notify modal-danger" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <p class="heading lead">Confirm Delete</p>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="white-text">&times;</span>
+                        </button>
+                    </div>
+
+                    <!--Body-->
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fa fa-recycle fa-4x mb-3 animated rotateIn"></i>
+                            <p>Are you sure delete this post?</p>
+                        </div>
+                    </div>
+
+                    <!--Footer-->
+                    <div class="modal-footer justify-content-center">
+                        <a type="button" id="btnYes" class="btn btn-primary-modal">Yes</a>
+                        <a type="button" id="btnNo" class="btn btn-outline-secondary-modal waves-effect"
+                           data-dismiss="modal">No</a>
+                    </div>
+                </div>
+                <!--/.Content-->
+            </div>
+        </div>
+        <!-- Central Modal Medium Danger-->
+
+    {% endif %}
+    <div class="fixed-action-btn smooth-scroll" style="bottom: 45px; right: 24px;">
+        <a href="#top-section" class="btn-floating btn-large light-blue">
+            <i class="fa fa-arrow-up"></i>
+        </a>
+    </div>
+{% endblock %}
+
+{% block js_footer %}
+    <script>
+        var link = location.href;
+        $("meta[property='og\\:url']").attr("content", link);
+        $("meta[property='og\\:title']").attr("content", "{{ entry.title }}");
+        $("meta[property='og\\:description']").attr("content", "{{ entry.description }}");
+        $("meta[property='og\\:image']").attr("content", "http://www.mousewip.tk/static/upload/{{ entry.image }}");
+
+
+        $('.fb-share-button').attr("data-href", link);
+        $('.fb-comments').attr("data-href", link);
+        $('.g-plusone').attr("data-href", link);
+
+        $('#btnEdit').click(function (e) {
+            e.preventDefault();
+            window.location.href = "{{ url_for('edit_post', id = entry.id | custom_encode) }}"
+        });
+        $('#btnDelete').click(function (e) {
+            e.preventDefault();
+            PNotify.removeAll();
+            var btnDelete = $(this);
+            $('#modalConfirmDelete').modal('toggle');
+            $('#btnYes').click(function (ey) {
+                ey.preventDefault();
+                $.ajax({
+                    url: '{{ url_for('delete_post') }}',
+                    type: 'POST',
+                    data: {'id': "{{ entry.id }}"},
+                    success: function (response) {
+                        var data = JSON.parse(response);
+                        if (data.code === 201 || data.code === 202) {
+                            $('#modalConfirmDelete').modal('hide');
+                            show_stack_bar_top('error', 'Oh no!', data.message);
+                        }
+                        else if (data.code === 200) {
+                            window.location.href = "{{ url_for('user_blog', uname = entry.user.username) }}";
+                        }
+                    }
+                });
+            });
+            $('#btnNo').click(function (en) {
+                en.preventDefault();
+                $('#modalConfirmDelete').modal('hide');
+            });
+        });
+
+        $('#btnChangeStatus').click(function (e) {
+            e.preventDefault();
+            PNotify.removeAll();
+            var btnChangeStatus = $(this);
+            $.ajax({
+                url: '{{ url_for('change_status_post') }}',
+                type: 'POST',
+                data: {'id': "{{ entry.id }}"},
+                success: function (response) {
+                    var data = JSON.parse(response);
+                    if (data.code === 201 || data.code === 202) {
+                        $('#modalConfirmDelete').modal('hide');
+                        show_stack_bar_top('error', 'Oh no!', data.message);
+                    }
+                    else if (data.code === 200) {
+                        status = $('#btnChangeStatus').attr('title');
+                        if (status === "Publish Post") status = "UnPublish Post";
+                        else status = "Publish Post";
+                        $('#btnChangeStatus').attr('title', status);
+                        show_stack_bar_top('success', 'Congratulation!', data.message);
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,9 @@
+Flask
+Jinja2
+Flask-DebugToolbar
+Flask-Mail
+babel
+pillow
+hashids
+werkzeug
+

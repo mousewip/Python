@@ -1,112 +1,10 @@
-{% extends 'mainpage/mainpage.html' %}
-
-{% block slider %}
-    <!--  Slider  -->
-    <div id="flexslider" class="fullpage-wrap extrasmall">
-        <ul class="slides">
-            <li style="background-image:url(../../static/assets/img/service1.jpg)">
-                <div class="text text-center">
-                    <h1 class="white margin-bottom-small">About Us</h1>
-                    <ul class="breadcrumb white">
-                        <li><a href="#">Home</a></li>
-                        <li>About Us</li>
-                    </ul>
-                </div>
-                <div class="gradient dark"></div>
-            </li>
-        </ul>
-    </div>
-    <!--  END Slider  -->
-
-{% endblock %}
-
+{% extends 'layout/layout.html' %}
 
 {% block content %}
-    <div id="post-wrap" class="content-section fullpage-wrap">
-        <div class="row padding-onlytop-md content-post no-margin">
-            <div class="text-center">
-                        <a href="" class="btn btn-default btn-rounded my-3 waves-effect waves-light" data-toggle="modal" data-target="#modalLRForm">Launch Modal LogIn/Register
-                            <i class="fa fa-eye ml-1"></i>
-                        </a>
-                    </div>
-            <div class="col-md-offset-2 col-md-8 padding-leftright-null">
-                <div class="row padding-sm">
-                                <div class="col-md-6">
-                                    <!--  Tab  -->
-                                    <!-- Nav tabs -->
-                                    <ul class="nav nav-tabs" role="tablist">
-                                        <li role="presentation" class="active"><a href="#tab-one" aria-controls="tab-one" role="tab" data-toggle="tab">Tab One</a></li>
-                                        <li role="presentation"><a href="#tab-two" aria-controls="tab-two" role="tab" data-toggle="tab">Tab Two</a></li>
-                                    </ul>
-                                    <!--  Nav Tabs  -->
-                                    <!-- Tab panes -->
-                                    <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane active" id="tab-one">Content one. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias dolorem sequi qui odit accusantium tempore debitis, est mollitia dolores voluptatum eos ea fugit quis rerum expedita non beatae nostrum. Eos.</div>
-                                        <div role="tabpanel" class="tab-pane" id="tab-two">Content two. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo animi ipsa architecto corrupti, atque commodi. Incidunt, accusamus. Nesciunt, quam, cumque? Vero id consequatur, aperiam ad quasi! Iure enim nesciunt hic!</div>
-                                    </div>
-                                    <!-- Tab panes -->
-                                    <!--  Tab  -->
-                                </div>
-                                <!-- Accordion -->
-                                <div class="col-md-6">
-                                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading" role="tab" id="headingOne">
-                                                <h4 class="panel-title">
-                                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        Accordion Item One
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                                <div class="panel-body">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo officia voluptates hic obcaecati voluptatum omnis, nihil nam numquam nisi esse praesentium iure consectetur dolorum porro a sequi veniam eligendi similique! Ab atque aliquam error eius natus repellendus voluptatibus dolore blanditiis.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading" role="tab" id="headingTwo">
-                                                <h4 class="panel-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                        Accordion Item Two
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                <div class="panel-body">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea reprehenderit atque labore, eos ad dolorem officia ut ex vero, totam assumenda, sapiente enim. Iusto, aliquid recusandae maiores enim deleniti fuga obcaecati placeat iste, libero, aut quos, officiis laborum nesciunt similique!
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading" role="tab" id="headingThree">
-                                                <h4 class="panel-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                        Accordion Item Three
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                <div class="panel-body">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur facere omnis tempore, atque, dolorum aperiam eligendi dignissimos quis? Alias itaque soluta dolorem dignissimos velit sint, dolores delectus, voluptatem animi molestiae atque voluptates, ab eius unde, voluptate totam? Illo, quasi, facilis.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Accordion -->
-                            </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <div class="col-md-6">
-
-
-
+    <main>
+        <section>
+            <div class="container-fluid">
+                <div class="col-md-6 mx-auto">
                     <!--Modal: Login & Register tabs-->
                     <div class="modal-dialog cascading-modal" role="document">
                         <!--Content-->
@@ -131,80 +29,109 @@
                                 <div class="tab-content">
                                     <!--Panel 1-->
                                     <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
+                                        <form action='{{ url_for('login') }}' , method="post">
+                                            <!--Body-->
+                                            <div class="modal-body mb-1">
+                                                <div class="md-form form-sm">
+                                                    <i class="fa fa-user prefix"></i>
+                                                    <input type="text" id="txtLUsername" name="username" required
+                                                           class="form-control">
+                                                    <label for="txtLUsername">Your username</label>
+                                                </div>
 
-                                        <!--Body-->
-                                        <div class="modal-body mb-1">
-                                            <div class="md-form form-sm">
-                                                <i class="fa fa-envelope prefix"></i>
-                                                <input type="text" id="form11" class="form-control">
-                                                <label for="form11">Your email</label>
-                                            </div>
+                                                <div class="md-form form-sm">
+                                                    <i class="fa fa-lock prefix"></i>
+                                                    <input type="password" id="txtLPassword" name="password" required
+                                                           class="form-control">
+                                                    <label for="txtLPassword">Your password</label>
+                                                </div>
+                                                <p class="text-danger text-center font-bold">{{ error_message }}</p>
+                                                <div class="text-center mt-2">
+                                                    <button class="btn btn-info waves-effect waves-light" type="submit">
+                                                        Log in
+                                                        <i class="fa fa-sign-in ml-1"></i>
+                                                    </button>
 
-                                            <div class="md-form form-sm">
-                                                <i class="fa fa-lock prefix"></i>
-                                                <input type="password" id="form12" class="form-control">
-                                                <label for="form12">Your password</label>
+                                                </div>
+                                                <div class="text-center mt-2">
+
+                                                    <fb:login-button scope="public_profile,email" data-size="large"
+                                                                     data-button-type="login_with"
+                                                                     onlogin="checkLoginFB();">Login With Facebook
+                                                    </fb:login-button>
+                                                </div>
                                             </div>
-                                            <div class="text-center mt-2">
-                                                <button class="btn btn-info waves-effect waves-light">Log in
-                                                    <i class="fa fa-sign-in ml-1"></i>
-                                                </button>
-                                            </div>
-                                        </div>
+                                        </form>
                                         <!--Footer-->
                                         <div class="modal-footer display-footer">
                                             <div class="options text-center text-md-right mt-1">
-                                                <p>Not a member?
-                                                    <a href="#" class="blue-text">Sign Up</a>
+                                                <p>
+                                                    <a href="#" class="blue-text" data-toggle="modal"
+                                                       data-target="#modalForgetPasswordForm">Forgot Password?</a>
                                                 </p>
-                                                <p>Forgot
-                                                    <a href="#" class="blue-text">Password?</a>
-                                                </p>
+
                                             </div>
-                                            <button type="button" class="btn btn-outline-info waves-effects ml-auto" data-dismiss="modal">Close</button>
+
                                         </div>
+
 
                                     </div>
                                     <!--/.Panel 1-->
 
                                     <!--Panel 2-->
                                     <div class="tab-pane fade" id="panel2" role="tabpanel">
+                                        <form action={{ url_for('register') }}, method="post">
+                                            <!--Body-->
+                                            <div class="modal-body">
+                                                <div class="md-form form-sm">
+                                                    <i class="fa fa-user prefix"></i>
+                                                    <input type="text" id="txtUsername" name="username"
+                                                           class="form-control" required>
+                                                    <label for="txtUsername">Your username</label>
+                                                    <p id="errorUsername"
+                                                       class="text-danger text-center small font-bold"></p>
+                                                </div>
+                                                <div class="md-form form-sm">
+                                                    <i class="fa fa-envelope prefix"></i>
+                                                    <input type="email" id="txtEmail" name="email" class="form-control"
+                                                           required>
+                                                    <label for="txtEmail">Your email</label>
+                                                    <p id="errorEmail"
+                                                       class="text-danger text-center small font-bold"></p>
+                                                </div>
 
-                                        <!--Body-->
-                                        <div class="modal-body">
-                                            <div class="md-form form-sm">
-                                                <i class="fa fa-envelope prefix"></i>
-                                                <input type="text" id="form13" class="form-control">
-                                                <label for="form13">Your email</label>
+                                                <div class="md-form form-sm">
+                                                    <i class="fa fa-lock prefix"></i>
+                                                    <input type="password" id="txtPassword" name="password"
+                                                           class="form-control" required>
+                                                    <label for="txtPassword">Your password</label>
+                                                </div>
+
+                                                <div class="md-form form-sm">
+                                                    <i class="fa fa-lock prefix"></i>
+                                                    <input type="password" id="txtRepeatpass" name="repassword"
+                                                           class="form-control" required>
+                                                    <label for="txtRepeatpass">Repeat password</label>
+                                                    <p id="errorRePass"
+                                                       class="text-danger text-center small font-bold"></p>
+                                                </div>
+
+                                                <div class="text-center form-sm mt-2">
+                                                    <button id="btnSubmitRegister"
+                                                            class="btn btn-info waves-effect waves-light"> Sign up
+                                                        <i class="fa fa-sign-in ml-1"></i>
+                                                    </button>
+                                                </div>
+
                                             </div>
-
-                                            <div class="md-form form-sm">
-                                                <i class="fa fa-lock prefix"></i>
-                                                <input type="password" id="form14" class="form-control">
-                                                <label for="form14">Your password</label>
-                                            </div>
-
-                                            <div class="md-form form-sm">
-                                                <i class="fa fa-lock prefix"></i>
-                                                <input type="password" id="form15" class="form-control">
-                                                <label for="form15">Repeat password</label>
-                                            </div>
-
-                                            <div class="text-center form-sm mt-2">
-                                                <button class="btn btn-info waves-effect waves-light">Sign up
-                                                    <i class="fa fa-sign-in ml-1"></i>
-                                                </button>
-                                            </div>
-
-                                        </div>
+                                        </form>
                                         <!--Footer-->
                                         <div class="modal-footer">
                                             <div class="options text-right">
                                                 <p class="pt-1">Already have an account?
-                                                    <a href="#" class="blue-text">Log In</a>
+                                                    <a class="blue-text" id="switchTabLogin">Log In</a>
                                                 </p>
                                             </div>
-                                            <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                     <!--/.Panel 2-->
@@ -217,4 +144,172 @@
                     <!--/Modal: Login & Register tabs-->
 
                 </div>
+            </div>
+        </section>
+    </main>
+    <div class="spinner"></div>
+    <div class="modal fade" id="modalForgetPasswordForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Forgot Password</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="md-form">
+                        <i class="fa fa-envelope prefix grey-text"></i>
+                        <input type="email" id="emailForgot" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="defaultForm-email">Your email</label>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-default" id="btnGetNewPassword">Get New Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js_footer %}
+    <script>
+        $(document).ready(function () {
+            $('#txtUsername').focusout(function () {
+                    var username = $('#txtUsername').val();
+                    $.ajax({
+                        url: '{{ url_for('check_username') }}',
+                        type: 'POST',
+                        data: {'username': username},
+                        success: function (response) {
+                            var data = JSON.parse(response);
+                            if (data.code === 201) {
+                                $('#errorUsername').text(data.message);
+                            }
+                        }
+                    });
+                }
+            );
+
+            $('#txtEmail').focusout(function () {
+                    var email = $('#txtEmail').val();
+                    $.ajax({
+                        url: '{{ url_for('check_email') }}',
+                        type: 'POST',
+                        data: {'email': email},
+                        success: function (response) {
+                            var data = JSON.parse(response);
+                            if (data.code === 201) {
+                                $('#errorEmail').text(data.message);
+                            }
+                        }
+                    });
+                }
+            );
+            $('#txtRepeatpass').focusout(function () {
+                    var pass = $('#txtPassword').val();
+                    var repass = $('#txtRepeatpass').val();
+                    console.log(pass);
+                    console.log(repass);
+                    if (pass !== repass) {
+                        $('#errorRePass').text("Confirm password does not match the password.");
+                    }
+                }
+            );
+
+            $('#txtUsername').focusin(function () {
+                    $('#errorUsername').text("");
+                }
+            );
+            $('#txtEmail').focusin(function () {
+                $('#errorEmail').text("");
+            });
+            $('#txtRepeatpass').focusin(function () {
+                $('#errorRePass').text("");
+            });
+
+            $('#btnSubmitRegister').click(function (e) {
+                e.preventDefault();
+                var uname = $('#txtUsername').val();
+                var email = $('#txtEmail').val();
+                var pass = $('#txtPassword').val();
+                $('.spinner').show();
+                $.ajax({
+                    url: '{{ url_for('register') }}',
+                    type: 'POST',
+                    data: {'username': uname, 'email': email, 'password': pass},
+                    success: function (response) {
+                        var data = JSON.parse(response);
+                        if (data.code === 201) {
+                            $('.spinner').hide();
+                            show_stack_bar_top('error', 'Oh no!', data.message);
+                        }
+                        else if (data.code === 200) {
+                            $('.spinner').hide();
+                            $('.nav-tabs a[href="#panel1"]').tab('show');
+                            show_stack_bar_top('success', 'Congratulation!', data.message);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        $('.spinner').hide();
+                        show_stack_bar_top('error', 'Oh no!', jqXHR.status + '(' + errorThrown + ')');
+                    }
+                });
+            });
+
+            $('#switchTabLogin').click(function (e) {
+                e.preventDefault();
+                $('.nav-tabs a[href="#panel1"]').tab('show');
+            });
+
+            $('#btnGetNewPassword').click(function (e) {
+                e.preventDefault();
+                $('#modalForgetPasswordForm').modal('toggle');
+                var email = $('#emailForgot').val();
+                $('.spinner').show();
+                $.ajax({
+                    url: '{{ url_for('forgetpassword') }}',
+                    type: 'post',
+                    data: {'email': email},
+                    success: function (response) {
+                        var data = JSON.parse(response);
+                        if (data.code === 201) {
+                            $('.spinner').hide();
+                            show_stack_bar_top('error', 'Oh no!', data.message);
+                        }
+                        else if (data.code === 200) {
+                            $('.spinner').hide();
+                            toastr.options = {
+                                "closeButton": false,
+                                "debug": false,
+                                "newestOnTop": false,
+                                "progressBar": false,
+                                "positionClass": "toast-top-full-width",
+                                "preventDuplicates": false,
+                                "onclick": null,
+                                "showDuration": 300,
+                                "hideDuration": 1000,
+                                "timeOut": 5000,
+                                "extendedTimeOut": 1000,
+                                "showEasing": "swing",
+                                "hideEasing": "linear",
+                                "showMethod": "fadeIn",
+                                "hideMethod": "fadeOut"
+                            };
+                            toastr["success"](data.message);
+                            {#                            show_stack_bar_top('success', 'Success!', data.message);#}
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        $('.spinner').hide();
+                        show_stack_bar_top('error', 'Oh no!', jqXHR.status + '(' + errorThrown + ')');
+                    }
+                });
+            });
+        });
+    </script>
+
 {% endblock %}

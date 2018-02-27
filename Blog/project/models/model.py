@@ -1,7 +1,7 @@
 from project import app
 import datetime
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, or_, BigInteger
 from hashlib import md5
 from flask.ext.login import UserMixin, LoginManager,  login_user, current_user, login_required, logout_user
 import re
@@ -14,7 +14,7 @@ login_manager.init_app(app)
 login_manager.login_view = "admin/login"
 
 
-_punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.]+')
+_punct_re = re.compile(r'[\t !"#$%&\'()*\-/<=>?@\[\\\]^_`{|},.+]+')
 def slugify(text, delim=b'-'):
     """Generates an slightly worse ASCII-only slug."""
     result = []
@@ -30,12 +30,16 @@ class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String, nullable=False, unique=True)
-    email = Column(String, nullable=False)
+    email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
-
+    description = Column(String(1024), default=None)
+    avatar = Column(String(250), default=None)
+    cover = Column(String(250), default=None)
+    facebook_id = Column(BigInteger, default=None)
+    phone = Column(String(20), default=None)
     entries = db.relationship('Entry', backref='user', lazy=True)
 
-    def __init__(self, uname, email ,password):
+    def __init__(self, uname, email, password):
         self.username = uname
         self.email = email
         self.set_password(password)
@@ -50,17 +54,21 @@ class Entry(db.Model):
     description = Column(String(1024))
     metatitle = Column(String(250))
     content = Column(Text)
+    image = Column(String(250), default=None)
+    views = Column(Integer, default=0)
     createdate = Column(DateTime, default=datetime.datetime.now)
     user_id = Column(Integer, ForeignKey('user.id'), default=None, nullable=False)
+    status = Column(Integer, default=1)
     posttag = db.relationship('PostTag', backref='entries', lazy=True)
     category_id = Column(Integer, ForeignKey('category.id'), nullable=False)
 
-    def __init__(self, title, description, content, category_id, user_id=1):
+    def __init__(self, title, description, content, category_id, image, user_id=1):
         self.title = title
         self.description = description
         self.metatitle = slugify(title)
         self.content = content
         self.user_id = user_id
+        self.image = image
         self.category_id = category_id
 
 
